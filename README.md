@@ -15,4 +15,6 @@
 
 #### It also models how quantities of objects (blocks, mobs, items) change over time as players explore, craft, and interact in the game.
 
+#### <hr>
+
 #### It also represents how a world itself may also be part of a larger server, hosted by certain players and enjoyed by other players. 
