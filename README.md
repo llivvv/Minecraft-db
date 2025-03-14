@@ -1,4 +1,4 @@
-# 🎮 Minecraft
+# 🎮 Minecraft Database
 #### This database models the elements of the game Minecraft, including blocks, players, achievements, worlds, and servers. 
 
 #### <hr>
