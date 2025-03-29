@@ -1,27 +1,27 @@
-DROP TABLE Achieve;
-DROP TABLE Achievement;
-DROP TABLE RecipeCraft2;
-DROP TABLE RecipeCraft1;
-DROP TABLE Build;
-DROP TABLE Store;
-DROP TABLE Mob2;
-DROP TABLE Mob1;
-DROP TABLE PlacedBlock2;
-DROP TABLE PlacedBlock1;
-DROP TABLE InventoryItem2;
-DROP TABLE InventoryItem1;
-DROP TABLE Saved;
-DROP TABLE Play;
-DROP TABLE WorldOpensHosts2;
-DROP TABLE WorldOpensHosts1;
-DROP TABLE Joined;
-DROP TABLE Participant;
-DROP TABLE Host;
-DROP TABLE PlayerHas;
-DROP TABLE Servers;
-DROP TABLE Inventory;
+drop table Achieve;
+drop table Achievement;
+drop table RecipeCraft2;
+drop table RecipeCraft1;
+drop table Build;
+drop table Store;
+drop table Mob2;
+drop table Mob1;
+drop table PlacedBlock2;
+drop table PlacedBlock1;
+drop table InventoryItem2;
+drop table InventoryItem1;
+drop table Saved;
+drop table Play;
+drop table WorldOpensHosts2;
+drop table WorldOpensHosts1;
+drop table Joined;
+drop table Participant;
+drop table Host;
+drop table PlayerHas;
+drop table Servers;
+drop table Inventory;
 
-CREATE TABLE Inventory (
+CREATE TABLE Inventory(
 	iid			INTEGER 	PRIMARY KEY,
 	remaining_slots	INTEGER	NOT NULL
 );
@@ -29,11 +29,11 @@ CREATE TABLE Inventory (
 CREATE TABLE Servers (
 	IPaddress		VARCHAR(15)	PRIMARY KEY,
 	sname			VARCHAR(255),
-	player_capacity	INTEGER	
+	player_capacity	INTEGER
 );
 
 CREATE TABLE PlayerHas (
-	username		VARCHAR(16)	PRIMARY KEY, 
+	username		VARCHAR(16)	PRIMARY KEY,
 	user_credentials	VARCHAR(255)	NOT NULL,
 	xp			INTEGER,
 	email			VARCHAR(255)	NOT NULL	UNIQUE,
@@ -58,11 +58,11 @@ CREATE TABLE Participant (
 CREATE TABLE Joined (
 	username			VARCHAR(16),
 	IPaddress			VARCHAR(15),
-	participant_permissions	VARCHAR(255), 
+	participant_permissions	VARCHAR(255),
 	PRIMARY KEY (username, IPaddress),
 	FOREIGN KEY (username) REFERENCES PlayerHas(username)
 		ON DELETE CASCADE,
-	FOREIGN KEY (IPaddress) REFERENCES Server(IPaddress)
+	FOREIGN KEY (IPaddress) REFERENCES Servers(IPaddress)
 		ON DELETE CASCADE
 );
 
@@ -80,14 +80,14 @@ CREATE TABLE WorldOpensHosts2 (
 	username		VARCHAR(16)	NOT NULL,
 	IPaddress		VARCHAR(15)		NOT NULL,
 	FOREIGN KEY (seed) REFERENCES WorldOpensHosts1(seed)
-		ON DELETE CASCADE, 
+		ON DELETE CASCADE,
 	FOREIGN KEY (username) REFERENCES PlayerHas(username)
 		ON DELETE CASCADE,
-	FOREIGN KEY (IPaddress) REFERENCES Server(IPaddress)
+	FOREIGN KEY (IPaddress) REFERENCES Servers(IPaddress)
 		ON DELETE CASCADE
 );
 
-CREATE TABLE Play (
+CREATE TABLE Play(
 	username 	VARCHAR(16)	PRIMARY KEY,
 	join_code	VARCHAR(255),
 	start_time	TIMESTAMP(0),
@@ -219,7 +219,7 @@ VALUES	('123.654.1.1', 'server2', 65000);
 INSERT INTO	Servers(IPaddress, sname, player_capacity)
 VALUES	('123.655.1.1', NULL, 65000);
 INSERT INTO	Servers(IPaddress, sname, player_capacity)
-VALUES	('123.656.1.1', NULL, 75000); 
+VALUES	('123.656.1.1', NULL, 75000);
 INSERT INTO	Servers(IPaddress, sname, player_capacity)
 VALUES	('123.657.1.1', 'server', 75000);
 
@@ -250,6 +250,7 @@ INSERT INTO	Participant(username) VALUES ('MineCraftGenius');
 
 INSERT INTO	Joined(username, IPaddress, participant_permissions)
 VALUES ('Liv', '123.456.1.1', '1');
+
 INSERT INTO	Joined(username, IPaddress, participant_permissions)
 VALUES ('Alexi', '123.654.1.1', '2');
 INSERT INTO	Joined(username, IPaddress, participant_permissions)
