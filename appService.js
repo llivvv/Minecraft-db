@@ -86,6 +86,26 @@ async function projPlayerHas() {
     });
 }
 
+// division on Achievement (achievements everyone has)
+async function divAchievement() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(`
+        SELECT a.aname
+        FROM Achievement a
+        WHERE NOT EXISTS
+        ((SELECT p.username FROM PlayerHas p)
+         MINUS
+         (SELECT ac.username
+          FROM Achieve ac
+          WHERE ac.aname = a.aname)
+         )
+        `);
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
 //async function fetchDemotableFromDb() {
 //    return await withOracleDB(async (connection) => {
 //        const result = await connection.execute('SELECT username, xp FROM PlayerHas ORDER BY xp DESC');
@@ -159,5 +179,6 @@ module.exports = {
 //    insertDemotable,
 //    updateNameDemotable,
 //    countDemotable,
-    projPlayerHas
+    projPlayerHas,
+    divAchievement
 };

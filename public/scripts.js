@@ -13,6 +13,7 @@
  */
 
 let isShowPlayers = false;
+let isShowAcByAll = false;
 
 // This function checks the database connection and updates its status on the frontend.
 async function checkDbConnection() {
@@ -46,7 +47,6 @@ async function viewAllPlayers() {
     if (isShowPlayers) {
         tableElement.classList.add("hide");
         document.getElementById("viewAllPlayersBtn").innerHTML = 'View All Players';
-        isShowPlayers = false;
 
     //fetch and show table
     } else {
@@ -72,8 +72,48 @@ async function viewAllPlayers() {
         });
 
         tableElement.classList.remove("hide");
-        isShowPlayers = true;
     }
+
+    isShowPlayers = !isShowPlayers;
+}
+
+// fetches achievements achieved by all and displays it
+async function viewAcByAll() {
+	const tableElement = document.getElementById('divAchievement');
+    const tableBody = document.getElementById('tbodyDivAchievement');
+
+	// hide table
+    if (isShowAcByAll) {
+        tableElement.classList.add("hide");
+        document.getElementById("divAchievementBtn").innerHTML = 'View Achievements achieved by all players';
+
+    //fetch and show table
+    } else {
+        document.getElementById("divAchievementBtn").innerHTML = 'Hide Achievements achieved by all players';
+
+        const response = await fetch('/divAchievement', {
+            method: 'GET'
+        });
+
+        const responseData = await response.json();
+        const acByAll = responseData.data;
+
+        if (tableBody) {
+            tableBody.innerHTML = '';
+        }
+
+        acByAll.forEach(user => {
+            const row = tableBody.insertRow();
+            user.forEach((field, index) => {
+                const cell = row.insertCell(index);
+                cell.textContent = field;
+            });
+        });
+
+        tableElement.classList.remove("hide");
+    }
+
+    isShowAcByAll = !isShowAcByAll;
 }
 
 //// Fetches data from the demotable and displays it.
@@ -202,6 +242,8 @@ window.onload = function() {
     checkDbConnection();
 //    fetchTableData();
     document.getElementById("viewAllPlayersBtn").addEventListener("click", viewAllPlayers);
+    document.getElementById("divAchievementBtn").addEventListener("click", viewAcByAll);
+
 //    document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
 //    document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
 //    document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);

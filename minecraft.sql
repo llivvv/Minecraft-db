@@ -260,56 +260,56 @@ VALUES ('Someone', '123.656.1.1', '4');
 INSERT INTO	Joined(username, IPaddress, participant_permissions)
 VALUES ('MineCraftGenius', '123.657.1.1', '5');
 
-INSERT INTO WorldOpensHosts1(seed, difficulty) 
+INSERT INTO WorldOpensHosts1(seed, difficulty)
 VALUES (-1106759604738884840, 'Easy');
-INSERT INTO	WorldOpensHosts1(seed, difficulty) 
+INSERT INTO	WorldOpensHosts1(seed, difficulty)
 VALUES (-5584399987456711267, 'Peaceful');
-INSERT INTO	WorldOpensHosts1(seed, difficulty) 
+INSERT INTO	WorldOpensHosts1(seed, difficulty)
 VALUES (-1754216045272489466, 'Normal');
-INSERT INTO	WorldOpensHosts1(seed, difficulty) 
+INSERT INTO	WorldOpensHosts1(seed, difficulty)
 VALUES (5101553622029575588, 'Hard');
-INSERT INTO	WorldOpensHosts1(seed, difficulty) 
+INSERT INTO	WorldOpensHosts1(seed, difficulty)
 VALUES (4025804172371830787, 'Very Hard');
 
-INSERT INTO	WorldOpensHosts2(join_code, settings, host_permissions, wname, seed, 
-IPaddress, username) 
-VALUES ('candyy', 'Creative Mode', '1', 'Giant Pale Garden', -1106759604738884840, 
+INSERT INTO	WorldOpensHosts2(join_code, settings, host_permissions, wname, seed,
+IPaddress, username)
+VALUES ('candyy', 'Creative Mode', '1', 'Giant Pale Garden', -1106759604738884840,
 '123.456.1.1', 'Liv');
-INSERT INTO	WorldOpensHosts2(join_code, settings, host_permissions, wname, seed, 
-IPaddress, username) 
-VALUES ('ballooon', 'Peaceful Mode', '2', 'Sakura Season', -5584399987456711267, 
+INSERT INTO	WorldOpensHosts2(join_code, settings, host_permissions, wname, seed,
+IPaddress, username)
+VALUES ('ballooon', 'Peaceful Mode', '2', 'Sakura Season', -5584399987456711267,
 '123.654.1.1', 'Alexi');
-INSERT INTO	WorldOpensHosts2(join_code, settings, host_permissions, wname, seed, 
-IPaddress, username) 
-VALUES ('ffish', 'Exploration Mode', '3', 'Frozen Edge Of The World', 
+INSERT INTO	WorldOpensHosts2(join_code, settings, host_permissions, wname, seed,
+IPaddress, username)
+VALUES ('ffish', 'Exploration Mode', '3', 'Frozen Edge Of The World',
 -1754216045272489466, '123.655.1.1', 'Ruby');
-INSERT INTO	WorldOpensHosts2(join_code, settings, host_permissions, wname, seed, 
-IPaddress, username) 
-VALUES ('bannaa', 'Adventure Mode', '4', 'Savanna Plateau River', 5101553622029575588, 
+INSERT INTO	WorldOpensHosts2(join_code, settings, host_permissions, wname, seed,
+IPaddress, username)
+VALUES ('bannaa', 'Adventure Mode', '4', 'Savanna Plateau River', 5101553622029575588,
 '123.656.1.1', 'Someone');
-INSERT INTO	WorldOpensHosts2(join_code, settings, host_permissions, wname, seed, 
-IPaddress, username) 
-VALUES ('geniuss', 'Hardcore Mode', '5', 'Giant Mangrove Swamp', 4025804172371830787, 
+INSERT INTO	WorldOpensHosts2(join_code, settings, host_permissions, wname, seed,
+IPaddress, username)
+VALUES ('geniuss', 'Hardcore Mode', '5', 'Giant Mangrove Swamp', 4025804172371830787,
 '123.657.1.1', 'MineCraftGenius');
 
 INSERT INTO	Play(username, join_code, start_time, end_time)
-VALUES ('Liv', 'candyy', TO_TIMESTAMP('2025-02-28 10:49:00', 'YYYY-MM-DD 
+VALUES ('Liv', 'candyy', TO_TIMESTAMP('2025-02-28 10:49:00', 'YYYY-MM-DD
 HH24:MI:SS'), TO_TIMESTAMP('2025-02-28 11:01:00', 'YYYY-MM-DD HH24:MI:SS'));
- 
+
 INSERT INTO	Play(username, join_code, start_time, end_time)
-VALUES ('Alexi', 'ballooon', TO_TIMESTAMP('2025-02-28 10:48:00', 'YYYY-MM-DD 
+VALUES ('Alexi', 'ballooon', TO_TIMESTAMP('2025-02-28 10:48:00', 'YYYY-MM-DD
 HH24:MI:SS'), TO_TIMESTAMP('2025-02-28 11:05:00', 'YYYY-MM-DD HH24:MI:SS'));
 INSERT INTO	Play(username, join_code, start_time, end_time)
-VALUES ('Ruby', 'ffish', TO_TIMESTAMP('2025-02-28 10:51:00', 'YYYY-MM-DD 
+VALUES ('Ruby', 'ffish', TO_TIMESTAMP('2025-02-28 10:51:00', 'YYYY-MM-DD
 HH24:MI:SS'), TO_TIMESTAMP('2025-02-28 11:02:01', 'YYYY-MM-DD HH24:MI:SS'));
 INSERT INTO	Play(username, join_code, start_time, end_time)
-VALUES ('Someone', 'bannaa', TO_TIMESTAMP('2025-03-02 22:00:00', 'YYYY-MM-DD 
+VALUES ('Someone', 'bannaa', TO_TIMESTAMP('2025-03-02 22:00:00', 'YYYY-MM-DD
 HH24:MI:SS'), TO_TIMESTAMP('2025-03-28 23:57:59', 'YYYY-MM-DD HH24:MI:SS'));
 INSERT INTO	Play(username, join_code, start_time, end_time)
-VALUES ('Somebody', 'bannaa', TO_TIMESTAMP('2025-02-28 10:20:00', 'YYYY-MM-DD 
+VALUES ('Somebody', 'bannaa', TO_TIMESTAMP('2025-02-28 10:20:00', 'YYYY-MM-DD
 HH24:MI:SS'), TO_TIMESTAMP('2025-03-01 15:20:00', 'YYYY-MM-DD HH24:MI:SS'));
 INSERT INTO	Play(username, join_code, start_time, end_time)
-VALUES ('MineCraftGenius', 'geniuss', TO_TIMESTAMP('2025-04-07 23:30:00', 
+VALUES ('MineCraftGenius', 'geniuss', TO_TIMESTAMP('2025-04-07 23:30:00',
 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2025-04-08 07:59:00', 'YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO	Saved(join_code, username) VALUES ('candyy', 'Liv');
@@ -318,26 +318,26 @@ INSERT INTO	Saved(join_code, username) VALUES ('ffish', 'Alexi');
 INSERT INTO	Saved(join_code, username) VALUES ('bannaa', 'Ruby');
 INSERT INTO	Saved(join_code, username) VALUES ('geniuss', 'MineCraftGenius');
 
-INSERT INTO	InventoryItem1(bname, thumbnail, stacking_capacity) 
+INSERT INTO	InventoryItem1(bname, thumbnail, stacking_capacity)
 VALUES ('Golden Apple', 260, 64);
-INSERT INTO	InventoryItem1(bname, thumbnail, stacking_capacity) 
+INSERT INTO	InventoryItem1(bname, thumbnail, stacking_capacity)
 VALUES ('Diamond Block', 264, 64);
-INSERT INTO	InventoryItem1(bname, thumbnail, stacking_capacity) 
+INSERT INTO	InventoryItem1(bname, thumbnail, stacking_capacity)
 VALUES ('Bow', 261, 1);
-INSERT INTO	InventoryItem1(bname, thumbnail, stacking_capacity) 
+INSERT INTO	InventoryItem1(bname, thumbnail, stacking_capacity)
 VALUES ('Bucket', 325, 64);
-INSERT INTO	InventoryItem1(bname, thumbnail, stacking_capacity) 
+INSERT INTO	InventoryItem1(bname, thumbnail, stacking_capacity)
 VALUES ('Bread', 295, 64);
 
-INSERT INTO	InventoryItem2(bid, bname, type) 
+INSERT INTO	InventoryItem2(bid, bname, type)
 VALUES (260, 'Golden Apple', 'Food');
-INSERT INTO	InventoryItem2(bid, bname, type) 
+INSERT INTO	InventoryItem2(bid, bname, type)
 VALUES (264, 'Diamond Block', 'Mineral Block');
-INSERT INTO	InventoryItem2(bid, bname, type) 
+INSERT INTO	InventoryItem2(bid, bname, type)
 VALUES (261, 'Bow', 'Weapons');
-INSERT INTO	InventoryItem2(bid, bname, type) 
+INSERT INTO	InventoryItem2(bid, bname, type)
 VALUES (325, 'Bucket', 'Utility');
-INSERT INTO	InventoryItem2(bid, bname, type) 
+INSERT INTO	InventoryItem2(bid, bname, type)
 VALUES (295, 'Bread', 'Food');
 
 INSERT INTO	PlacedBlock1(bname, ptexture, block_physics)
@@ -392,29 +392,29 @@ INSERT INTO	Build(join_code, bid, mid) VALUES ('ffish', 3, 120);
 INSERT INTO	Build(join_code, bid, mid) VALUES ('bannaa', 58, 58);
 INSERT INTO	Build(join_code, bid, mid) VALUES ('geniuss', 10, 59);
 
-INSERT INTO RecipeCraft1(resulting_block, ingredient_blocks) 
+INSERT INTO RecipeCraft1(resulting_block, ingredient_blocks)
 VALUES ('Golden Apple', 'Apple, Gold Nuggetx8');
-INSERT INTO RecipeCraft1(resulting_block, ingredient_blocks) 
+INSERT INTO RecipeCraft1(resulting_block, ingredient_blocks)
 VALUES ('Diamond Block', 'Diamondx9');
-INSERT INTO RecipeCraft1(resulting_block, ingredient_blocks) 
+INSERT INTO RecipeCraft1(resulting_block, ingredient_blocks)
 VALUES ('Bow', 'Stringx3, Stickx3');
-INSERT INTO RecipeCraft1(resulting_block, ingredient_blocks) 
+INSERT INTO RecipeCraft1(resulting_block, ingredient_blocks)
 VALUES ('Bucket', 'Iron Ingotx3');
-INSERT INTO RecipeCraft1(resulting_block, ingredient_blocks) 
+INSERT INTO RecipeCraft1(resulting_block, ingredient_blocks)
 VALUES ('Bread', 'Wheatx3');
 
-INSERT INTO RecipeCraft2(rname, resulting_block) 
+INSERT INTO RecipeCraft2(rname, resulting_block)
 VALUES ('Golden Apple Recipe', 'Golden Apple');
-INSERT INTO RecipeCraft2(rname, resulting_block) 
+INSERT INTO RecipeCraft2(rname, resulting_block)
 VALUES ('Diamond Block Recipe', 'Diamond Block');
-INSERT INTO RecipeCraft2(rname, resulting_block) 
+INSERT INTO RecipeCraft2(rname, resulting_block)
 VALUES ('Bow Recipe', 'Bow');
-INSERT INTO RecipeCraft2(rname, resulting_block) 
+INSERT INTO RecipeCraft2(rname, resulting_block)
 VALUES ('Bucket Recipe', 'Bucket');
-INSERT INTO RecipeCraft2(rname, resulting_block) 
+INSERT INTO RecipeCraft2(rname, resulting_block)
 VALUES ('Bread Recipe', 'Bread');
 
-INSERT INTO	Achievement(aname, criteria) 
+INSERT INTO	Achievement(aname, criteria)
 VALUES	 ('Taking Inventory', 'Open your inventory.');
 INSERT INTO	Achievement(aname, criteria)
 VALUES	('Getting Wood', 'Punch a tree until a block of wood pops out.');
@@ -434,4 +434,12 @@ VALUES	('Alexi', 'Getting Wood', NULL, 0.0);
 INSERT INTO	Achieve(username, aname, date_received, progress)
 VALUES	('Someone', 'Bake Bread', NULL, 98.01);
 INSERT INTO	Achieve(username, aname, date_received, progress)
+VALUES	('Someone', 'Getting Wood', NULL, 98.01);
+INSERT INTO	Achieve(username, aname, date_received, progress)
 VALUES	('Ruby', 'Acquire Hardware', TO_DATE('2025-03-02', 'YYYY-MM-DD'), 100.0);
+INSERT INTO	Achieve(username, aname, date_received, progress)
+VALUES	('Ruby', 'Getting Wood', TO_DATE('2025-03-17', 'YYYY-MM-DD'), 100.0);
+INSERT INTO	Achieve(username, aname, date_received, progress)
+VALUES	('Somebody', 'Getting Wood', TO_DATE('2025-03-16', 'YYYY-MM-DD'), 100.0);
+INSERT INTO	Achieve(username, aname, date_received, progress)
+VALUES	('MineCraftGenius', 'Getting Wood', TO_DATE('2025-03-16', 'YYYY-MM-DD'), 100.0);

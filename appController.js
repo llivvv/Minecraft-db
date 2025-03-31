@@ -21,6 +21,12 @@ router.get('/projPlayerHas', async (req, res) => {
     res.json({data: tableContent});
 });
 
+// for division on Achievement
+router.get('/divAchievement', async (req, res) => {
+    const tableContent = await appService.divAchievement();
+    res.json({data: tableContent});
+});
+
 //router.get('/demotable', async (req, res) => {
 //    const tableContent = await appService.fetchDemotableFromDb();
 //    res.json({data: tableContent});
