@@ -5,8 +5,8 @@ body {
     max-width: 800px;
     margin: auto;
     line-height: 1.6;
-    background-color: #fffef5f9;
-    color: #313131;
+    background-color: #000000;
+    color: #E0E0E0;
 }
 
 hr {
@@ -77,6 +77,10 @@ input, textarea {
 
 input::placeholder, textarea::placeholder {
     color: #aaa;
+}
+
+.hide {
+	display: none;
 }
 
 /* OTHER STYLES */
