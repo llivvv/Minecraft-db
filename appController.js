@@ -34,7 +34,7 @@ router.post('/updatePlayer', async (req, res) => {
 });
 
 // for projection on Mob1
-router.get("/projMob", async (req, res) => {
+router.get('/projMob', async (req, res) => {
     const params = req.query.atts;
     const tableContent = await appService.projMob(params);
     res.json({ data: tableContent });

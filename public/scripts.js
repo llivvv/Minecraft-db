@@ -38,6 +38,16 @@ async function checkDbConnection() {
     });
 }
 
+function makeTableRows(resData, tableBody) {
+	resData.forEach(user => {
+        const row = tableBody.insertRow();
+        user.forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        });
+    });
+}
+
 // fetches data from PlayerHas and displays it
 async function viewAllPlayers() {
     const sectionElement = document.getElementById('playerSection');
@@ -58,14 +68,7 @@ async function viewAllPlayers() {
             tableBody.innerHTML = '';
         }
 
-        allPlayersContent.forEach(user => {
-            const row = tableBody.insertRow();
-            user.forEach((field, index) => {
-                const cell = row.insertCell(index);
-                cell.textContent = field;
-            });
-        });
-
+        makeTableRows(allPlayersContent, tableBody);
         sectionElement.classList.remove("hide");
     }
 
@@ -97,14 +100,7 @@ async function viewAcByAll() {
             tableBody.innerHTML = '';
         }
 
-        acByAll.forEach(user => {
-            const row = tableBody.insertRow();
-            user.forEach((field, index) => {
-                const cell = row.insertCell(index);
-                cell.textContent = field;
-            });
-        });
-
+        makeTableRows(acByAll, tableBody);
         tableElement.classList.remove("hide");
     }
 
@@ -127,55 +123,54 @@ async function updatePlayer() {
 // for Mob1 projection
 async function projMob(e) {
   e.preventDefault();
+  const tableElement = document.getElementById('showProjMob');
+  const tableBody = document.getElementById('tbodyProjMob');
+  const tableTr = document.getElementById('trProjMob');
+  const form = document.getElementById('formProjMob');
+  const hideBtn = document.getElementById('hideMobBtn');
+  const formData = new FormData(form);
 
-  const tableElement = document.getElementById("showProjMob");
-  const tableBody = document.getElementById("tbodyProjMob");
-  const tableTr = document.getElementById("trProjMob");
-
-  const formm = document.getElementById("formProjMob");
-  const formData = new FormData(formm);
-
+  const arrData = formData.getAll('atts');
   // handle user not selecting any checkbox
-  if (formData == []) {
-    alert("Please select at least 1 attribute");
-    return;
-  }
-
-  const arrData = formData.getAll("atts");
+    if (arrData.length == 0) {
+      alert('Please select at least 1 attribute');
+      return;
+    }
   const strData = arrData.join(",");
 
   // reset column names
   if (tableTr) {
-    tableTr.innerHTML = "";
+     tableTr.innerHTML = "";
   }
 
   // get column names
   arrData.map((att) => {
-    let trElem = document.createElement("th");
+    let trElem = document.createElement('th');
     trElem.innerHTML = att;
     tableTr.appendChild(trElem);
   });
 
   const response = await fetch(`/projMob?atts=${strData}`, {
-    method: "GET",
+    method: 'GET',
   });
 
   const responseData = await response.json();
   const projMob = responseData.data;
 
   if (tableBody) {
-    tableBody.innerHTML = "";
+    tableBody.innerHTML = '';
   }
 
-  projMob.forEach((user) => {
-    const row = tableBody.insertRow();
-    user.forEach((field, index) => {
-      const cell = row.insertCell(index);
-      cell.textContent = field;
-    });
-  });
+  makeTableRows(projMob, tableBody);
+  tableElement.classList.remove('hide');
+  hideBtn.classList.remove('hide');
+}
 
-  tableElement.classList.remove("hide");
+function closeProjMobTable() {
+	const tableElement = document.getElementById('showProjMob');
+	const hideBtn = document.getElementById('hideMobBtn');
+	tableElement.classList.add('hide');
+	hideBtn.classList.add('hide');
 }
 
 
@@ -188,6 +183,7 @@ window.onload = function() {
     document.getElementById("divAchievementBtn").addEventListener("click", viewAcByAll);
     document.getElementById("updatePlayer").addEventListener("submit", updatePlayer);
     document.getElementById("formProjMob").addEventListener("submit", projMob);
+    document.getElementById('hideMobBtn').addEventListener("click", closeProjMobTable);
 };
 
 // General function to refresh the displayed table data.

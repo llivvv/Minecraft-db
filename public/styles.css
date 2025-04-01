@@ -24,6 +24,11 @@ h2 {
 	text-shadow: 4px 2px #68453F;
 }
 
+#appTitle {
+	font-style: italic;
+	color: #46B03C;
+}
+
 /* TABLE STYLES */
 table {
     width: 100%;
