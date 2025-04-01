@@ -92,7 +92,8 @@ CREATE TABLE Play(
 	join_code	VARCHAR(255),
 	start_time	TIMESTAMP(0),
 	end_time	TIMESTAMP(0),
-	FOREIGN KEY (username) REFERENCES PlayerHas(username),
+	FOREIGN KEY (username) REFERENCES PlayerHas(username)
+		ON DELETE CASCADE,
 	FOREIGN KEY (join_code) REFERENCES WorldOpensHosts2(join_code)
 		ON DELETE SET NULL
 );
@@ -116,7 +117,7 @@ CREATE TABLE InventoryItem1 (
 CREATE TABLE InventoryItem2 (
 	bid		INTEGER	PRIMARY KEY,
 	bname		VARCHAR(255),
-	type		VARCHAR(255),
+	btype		VARCHAR(255),
 	FOREIGN KEY (bname) REFERENCES InventoryItem1(bname)
 		ON DELETE CASCADE
 );
@@ -130,7 +131,7 @@ CREATE TABLE PlacedBlock1 (
 CREATE TABLE PlacedBlock2 (
 	bid		INTEGER	PRIMARY KEY,
 	bname		VARCHAR(255),
-	type		VARCHAR(255),
+	ptype		VARCHAR(255),
 	FOREIGN KEY (bname) REFERENCES PlacedBlock1(bname)
 		ON DELETE CASCADE
 );
@@ -169,9 +170,9 @@ CREATE TABLE Build (
 	FOREIGN KEY (join_code) REFERENCES WorldOpensHosts2(join_code)
 		ON DELETE CASCADE,
 	FOREIGN KEY (bid) REFERENCES PlacedBlock2(bid)
-		ON DELETE SET NULL,
+		ON DELETE CASCADE,
 	FOREIGN KEY (mid) REFERENCES Mob2(mid)
-		ON DELETE SET NULL
+		ON DELETE CASCADE
 );
 
 CREATE TABLE RecipeCraft1 (
@@ -200,7 +201,7 @@ CREATE TABLE Achieve (
 	progress		DECIMAL,
 	PRIMARY KEY (username, aname),
 	FOREIGN KEY (username) REFERENCES PlayerHas(username)
-		ON DELETE SET NULL,
+		ON DELETE CASCADE,
 	FOREIGN KEY (aname) REFERENCES Achievement(aname)
 		ON DELETE CASCADE
 );
@@ -329,15 +330,15 @@ VALUES ('Bucket', 325, 64);
 INSERT INTO	InventoryItem1(bname, thumbnail, stacking_capacity)
 VALUES ('Bread', 295, 64);
 
-INSERT INTO	InventoryItem2(bid, bname, type)
+INSERT INTO	InventoryItem2(bid, bname, btype)
 VALUES (260, 'Golden Apple', 'Food');
-INSERT INTO	InventoryItem2(bid, bname, type)
+INSERT INTO	InventoryItem2(bid, bname, btype)
 VALUES (264, 'Diamond Block', 'Mineral Block');
-INSERT INTO	InventoryItem2(bid, bname, type)
+INSERT INTO	InventoryItem2(bid, bname, btype)
 VALUES (261, 'Bow', 'Weapons');
-INSERT INTO	InventoryItem2(bid, bname, type)
+INSERT INTO	InventoryItem2(bid, bname, btype)
 VALUES (325, 'Bucket', 'Utility');
-INSERT INTO	InventoryItem2(bid, bname, type)
+INSERT INTO	InventoryItem2(bid, bname, btype)
 VALUES (295, 'Bread', 'Food');
 
 INSERT INTO	PlacedBlock1(bname, ptexture, block_physics)
@@ -351,11 +352,11 @@ VALUES	('Clay', 82, NULL);
 INSERT INTO	PlacedBlock1(bname, ptexture, block_physics)
 VALUES	('Red Tulip', 1088, 'Transparent');
 
-INSERT INTO	PlacedBlock2(bid, bname, type) VALUES (145, 'Anvil', 'Utility');
-INSERT INTO	PlacedBlock2(bid, bname, type) VALUES (2, 'Clay', 'Build');
-INSERT INTO	PlacedBlock2(bid, bname, type) VALUES (3, 'Clay', 'Build');
-INSERT INTO	PlacedBlock2(bid, bname, type) VALUES (58, 'Crafting Table', 'Utility');
-INSERT INTO	PlacedBlock2(bid, bname, type) VALUES (10, 'Chipped Anvil', 'Utility');
+INSERT INTO	PlacedBlock2(bid, bname, ptype) VALUES (145, 'Anvil', 'Utility');
+INSERT INTO	PlacedBlock2(bid, bname, ptype) VALUES (2, 'Clay', 'Build');
+INSERT INTO	PlacedBlock2(bid, bname, ptype) VALUES (3, 'Clay', 'Build');
+INSERT INTO	PlacedBlock2(bid, bname, ptype) VALUES (58, 'Crafting Table', 'Utility');
+INSERT INTO	PlacedBlock2(bid, bname, ptype) VALUES (10, 'Chipped Anvil', 'Utility');
 
 
 INSERT
