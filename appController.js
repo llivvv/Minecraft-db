@@ -15,9 +15,9 @@ router.get('/check-db-connection', async (req, res) => {
     }
 });
 
-// for projection on PlayerHas
-router.get('/projPlayerHas', async (req, res) => {
-    const tableContent = await appService.projPlayerHas();
+// show PlayerHas table
+router.get('/viewPlayerHas', async (req, res) => {
+    const tableContent = await appService.viewPlayerHas();
     res.json({data: tableContent});
 });
 
@@ -27,54 +27,11 @@ router.get('/divAchievement', async (req, res) => {
     res.json({data: tableContent});
 });
 
-//router.get('/demotable', async (req, res) => {
-//    const tableContent = await appService.fetchDemotableFromDb();
-//    res.json({data: tableContent});
-//});
-
-//router.post("/initiate-demotable", async (req, res) => {
-//    const initiateResult = await appService.initiateDemotable();
-//    if (initiateResult) {
-//        res.json({ success: true });
-//    } else {
-//        res.status(500).json({ success: false });
-//    }
-//});
-
-//router.post("/insert-demotable", async (req, res) => {
-//    const { id, name } = req.body;
-//    const insertResult = await appService.insertDemotable(id, name);
-//    if (insertResult) {
-//        res.json({ success: true });
-//    } else {
-//        res.status(500).json({ success: false });
-//    }
-//});
-
-//router.post("/update-name-demotable", async (req, res) => {
-//    const { oldName, newName } = req.body;
-//    const updateResult = await appService.updateNameDemotable(oldName, newName);
-//    if (updateResult) {
-//        res.json({ success: true });
-//    } else {
-//        res.status(500).json({ success: false });
-//    }
-//});
-//
-//router.get('/count-demotable', async (req, res) => {
-//    const tableCount = await appService.countDemotable();
-//    if (tableCount >= 0) {
-//        res.json({
-//            success: true,
-//            count: tableCount
-//        });
-//    } else {
-//        res.status(500).json({
-//            success: false,
-//            count: tableCount
-//        });
-//    }
-//});
+router.post('/updatePlayer', async (req, res) => {
+    const { username, xp, email } = req.body;
+    const result = await appService.updatePlayer(username, xp, email);
+    res.json({ message: result.message });
+});
 
 
 module.exports = router;
