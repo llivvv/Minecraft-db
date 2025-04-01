@@ -296,7 +296,6 @@ VALUES ('geniuss', 'Hardcore Mode', '5', 'Giant Mangrove Swamp', 402580417237183
 INSERT INTO	Play(username, join_code, start_time, end_time)
 VALUES ('Liv', 'candyy', TO_TIMESTAMP('2025-02-28 10:49:00', 'YYYY-MM-DD
 HH24:MI:SS'), TO_TIMESTAMP('2025-02-28 11:01:00', 'YYYY-MM-DD HH24:MI:SS'));
-
 INSERT INTO	Play(username, join_code, start_time, end_time)
 VALUES ('Alexi', 'ballooon', TO_TIMESTAMP('2025-02-28 10:48:00', 'YYYY-MM-DD
 HH24:MI:SS'), TO_TIMESTAMP('2025-02-28 11:05:00', 'YYYY-MM-DD HH24:MI:SS'));
