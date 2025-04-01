@@ -124,6 +124,60 @@ async function updatePlayer() {
     viewAllPlayers();
 }
 
+// for Mob1 projection
+async function projMob(e) {
+  e.preventDefault();
+
+  const tableElement = document.getElementById("showProjMob");
+  const tableBody = document.getElementById("tbodyProjMob");
+  const tableTr = document.getElementById("trProjMob");
+
+  const formm = document.getElementById("formProjMob");
+  const formData = new FormData(formm);
+
+  // handle user not selecting any checkbox
+  if (formData == []) {
+    alert("Please select at least 1 attribute");
+    return;
+  }
+
+  const arrData = formData.getAll("atts");
+  const strData = arrData.join(",");
+
+  // reset column names
+  if (tableTr) {
+    tableTr.innerHTML = "";
+  }
+
+  // get column names
+  arrData.map((att) => {
+    let trElem = document.createElement("th");
+    trElem.innerHTML = att;
+    tableTr.appendChild(trElem);
+  });
+
+  const response = await fetch(`/projMob?atts=${strData}`, {
+    method: "GET",
+  });
+
+  const responseData = await response.json();
+  const projMob = responseData.data;
+
+  if (tableBody) {
+    tableBody.innerHTML = "";
+  }
+
+  projMob.forEach((user) => {
+    const row = tableBody.insertRow();
+    user.forEach((field, index) => {
+      const cell = row.insertCell(index);
+      cell.textContent = field;
+    });
+  });
+
+  tableElement.classList.remove("hide");
+}
+
 
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
@@ -133,6 +187,7 @@ window.onload = function() {
     document.getElementById("viewAllPlayersBtn").addEventListener("click", viewAllPlayers);
     document.getElementById("divAchievementBtn").addEventListener("click", viewAcByAll);
     document.getElementById("updatePlayer").addEventListener("submit", updatePlayer);
+    document.getElementById("formProjMob").addEventListener("submit", projMob);
 };
 
 // General function to refresh the displayed table data.
