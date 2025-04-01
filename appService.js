@@ -131,7 +131,6 @@ async function updatePlayer(username, xp, email) {
 // projection on Mob
 async function projMob(params) {
   const sql = "SELECT " + params + " from Mob1";
-  console.log(sql);
 
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(sql);
