@@ -42,6 +42,17 @@ router.post("/update-player-email", async (req, res) => {
     }
 });
 
+// for delete on PlayerHas
+router.post("/delete-player", async (req, res) => {
+    const { username } = req.body;
+    const deleteResult = await appService.deletePlayer(username);
+    if (deleteResult) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
 // for division on Achievement
 router.get('/divAchievement', async (req, res) => {
     const tableContent = await appService.divAchievement();

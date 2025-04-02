@@ -115,6 +115,21 @@ async function updatePlayerTable(username, email) {
     });
 }
 
+// delete user on PlayerHas
+async function deletePlayer(username) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `DELETE FROM PlayerHas where username=:username`,
+            [username],
+            { autoCommit: true }
+        );
+
+        return result.rowsAffected && result.rowsAffected > 0;
+    }).catch(() => {
+        return false;
+    });
+}
+
 // division on Achievement (achievements everyone has)
 async function divAchievement() {
     return await withOracleDB(async (connection) => {
@@ -152,6 +167,7 @@ module.exports = {
     fetchPlayersFromDb,
     insertPlayer,
     updatePlayerTable,
+    deletePlayer,
     divAchievement,
     projMob,
 };

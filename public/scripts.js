@@ -139,6 +139,32 @@ async function updatePlayerEmail(e) {
     }
 }
 
+async function deletePlayer(e) {
+    e.preventDefault();
+
+    const usernameValue = document.getElementById('delUsername').value;
+
+    const response = await fetch('/delete-player', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: usernameValue,
+        })
+    });
+
+    const responseData = await response.json();
+    const messageElement = document.getElementById('delPlayerResultMsg');
+
+    if (responseData.success) {
+        messageElement.textContent = "Player deleted successfully!";
+        fetchTableData();
+    } else {
+        messageElement.textContent = "Error deleting player!";
+    }
+}
+
 // fetches achievements achieved by all and displays it
 async function viewAcByAll() {
 	const tableElement = document.getElementById('divAchievement');
@@ -235,6 +261,7 @@ window.onload = function() {
     document.getElementById("divAchievementBtn").addEventListener("click", viewAcByAll);
     document.getElementById("formProjMob").addEventListener("submit", projMob);
     document.getElementById('hideMobBtn').addEventListener("click", closeProjMobTable);
+    document.getElementById("delPlayer").addEventListener("submit", deletePlayer);
 };
 
 // General function to refresh the displayed table data.
