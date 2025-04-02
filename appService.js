@@ -75,17 +75,43 @@ async function testOracleConnection() {
     });
 }
 
-// view PlayerHas relation
-async function viewPlayerHas() {
+// fetch Players from database
+async function fetchPlayersFromDb() {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute(`
-        SELECT username, user_credentials, xp, email, skin, iid
-        FROM PlayerHas
-        ORDER BY xp DESC
-        `);
+        const result = await connection.execute('SELECT * FROM PlayerHas');
         return result.rows;
     }).catch(() => {
         return [];
+    });
+}
+
+// insert on PlayerHas
+async function insertPlayer(username, user_credentials, xp, email, skin, iid) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `INSERT INTO PlayerHas (username, user_credentials, xp, email, skin, iid) VALUES (:username, :user_credentials, :xp, :email, :skin, :iid)`,
+            [username, user_credentials, xp, email, skin, iid],
+            { autocommit: true }
+        );
+
+        return result.rowsAffected && result.rowsAffected > 0;
+    }).catch(() => {
+        return false;
+    })
+}
+
+// update non primary key on PlayerHas
+async function updatePlayerTable(username, email) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `UPDATE PlayerHas SET email=:email where username=:username`,
+            [email, username],
+            { autoCommit: true }
+        );
+
+        return result.rowsAffected && result.rowsAffected > 0;
+    }).catch(() => {
+        return false;
     });
 }
 
@@ -109,25 +135,6 @@ async function divAchievement() {
     });
 }
 
-async function updatePlayer(username, xp, email) {
-    return await withOracleDB(async (connection) => {
-        try {
-            const result = await connection.execute(
-                `UPDATE PlayerHas
-                SET xp = xp, email = email
-                WHERE username = username`,
-                { xp, email, username },
-                { autocommit: true }
-            );
-            return { success: false, message: "Played updated" }
-        } catch (error) {
-            console.error(error);
-            return { success: false, message: "Update failed" };
-        }
-
-    })
-}
-
 // projection on Mob
 async function projMob(params) {
   const sql = "SELECT " + params + " from Mob1";
@@ -140,25 +147,11 @@ async function projMob(params) {
   });
 }
 
-async function insertPlayer(username, user_credentials, xp, email, skin, iid) {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute(
-            `INSERT INTO PlayerHas (username, user_credentials, xp, email, skin, iid) VALUES (:username, :user_credentials, :xp, :email, :skin, :iid)`,
-            [username, user_credentials, xp, email, skin, iid],
-            { autocommit: true }
-        );
-
-        return result.rowsAffected && result.rowsAffected > 0;
-    }).catch(() => {
-        return false;
-    })
-}
-
 module.exports = {
     testOracleConnection,
-    viewPlayerHas,
+    fetchPlayersFromDb,
+    insertPlayer,
+    updatePlayerTable,
     divAchievement,
-    updatePlayer,
     projMob,
-    insertPlayer
 };

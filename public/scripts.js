@@ -48,31 +48,95 @@ function makeTableRows(resData, tableBody) {
     });
 }
 
-// fetches data from PlayerHas and displays it
-async function viewAllPlayers() {
-    const sectionElement = document.getElementById('playerSection');
+async function fetchAndDisplayPlayers() {
+    const tableElement = document.getElementById('allPlayers');
     const tableBody = document.getElementById('tbodyAllPlayers');
 
-	// hide table
-    if (isShowPlayers) {
-        sectionElement.classList.add("hide");
-        document.getElementById("viewAllPlayersBtn").innerHTML = 'View All Players';
-    } else {
-        document.getElementById("viewAllPlayersBtn").innerHTML = 'Hide All Players';
+    const response = await fetch('/players', {
+        method: 'GET'
+    });
+    const responseData = await response.json();
+    const playersContent = responseData.data;
 
-        const response = await fetch('/viewPlayerHas', { method: 'GET' });
-        const responseData = await response.json();
-        const allPlayersContent = responseData.data;
-
-        if (tableBody) {
-            tableBody.innerHTML = '';
-        }
-
-        makeTableRows(allPlayersContent, tableBody);
-        sectionElement.classList.remove("hide");
+    if (tableBody) {
+        tableBody.innerHTML = '';
     }
 
-    isShowPlayers = !isShowPlayers;
+    playersContent.forEach(user => {
+        const row = tableBody.insertRow();
+        user.forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        });
+    });
+
+    const playerSection = document.getElementById('playerSection');
+    playerSection.classList.remove('hide');
+}
+
+async function insertPlayer(event) {
+    event.preventDefault()
+
+    const usernameValue = document.getElementById('insertUsername').value;
+    const userCredentialsValue = document.getElementById('insertUserCredentials').value;
+    const xpValue = document.getElementById('insertXp').value;
+    const emailValue = document.getElementById('insertEmail').value;
+    const skinValue = document.getElementById('insertSkin').value;
+    const iidValue = document.getElementById('insertIid').value;
+
+    const response = await fetch('/insertPlayer', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: usernameValue,
+            user_credentials: userCredentialsValue,
+            xp: xpValue,
+            email: emailValue,
+            skin: skinValue,
+            iid: iidValue
+        })
+    });
+
+    const responseData = await response.json();
+    const messageElement = document.getElementById('insertResultMsg');
+
+    if (responseData.success) {
+        messageElement.textContent = "Player inserted successfully!";
+    } else {
+        messageElement.textContent = "Error inserting Player!";
+    }
+
+    fetchAndDisplayPlayers();
+}
+
+async function updatePlayerEmail(e) {
+    e.preventDefault();
+
+    const usernameValue = document.getElementById('updateUsername').value;
+    const emailValue = document.getElementById('updateEmail').value;
+
+    const response = await fetch('/update-player-email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: usernameValue,
+            email: emailValue
+        })
+    });
+
+    const responseData = await response.json();
+    const messageElement = document.getElementById('updateEmailResultMsg');
+
+    if (responseData.success) {
+        messageElement.textContent = "Email updated successfully!";
+        fetchTableData();
+    } else {
+        messageElement.textContent = "Error updating email!";
+    }
 }
 
 // fetches achievements achieved by all and displays it
@@ -105,19 +169,6 @@ async function viewAcByAll() {
     }
 
     isShowAcByAll = !isShowAcByAll;
-}
-
-async function updatePlayer() {
-    const username = document.getElementById('updateUsername');
-    const xp = document.getElementById('updateXp');
-    const email = document.getElementById('updateEmail');
-
-    const response = await fetch('/updatePlayer', {
-        method: 'POST'
-    });
-
-    const responseData = await response.json();
-    viewAllPlayers();
 }
 
 // for Mob1 projection
@@ -173,58 +224,21 @@ function closeProjMobTable() {
 	hideBtn.classList.add('hide');
 }
 
-async function insertPlayer(event) {
-    event.preventDefault()
-
-    const usernameValue = document.getElementById('insertUsername').value;
-    const userCredentialsValue = document.getElementById('insertUserCredentials').value;
-    const xpValue = document.getElementById('insertXp').value;
-    const emailValue = document.getElementById('insertEmail').value;
-    const skinValue = document.getElementById('insertSkin').value;
-    const iidValue = document.getElementById('insertIid').value;
-
-    const response = await fetch('/insertPlayer', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username: usernameValue,
-            user_credentials: userCredentialsValue,
-            xp: xpValue,
-            email: emailValue,
-            skin: skinValue,
-            iid: iidValue
-        })
-    });
-
-    const responseData = await response.json();
-    const messageElement = document.getElementById('insertResultMsg');
-
-    if (responseData.success) {
-        messageElement.textContent = "Player inserted successfully!";
-    } else {
-        messageElement.textContent = "Error inserting Player!";
-    }
-
-    viewAllPlayers();
-}
-
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
 // Add or remove event listeners based on the desired functionalities.
 window.onload = function() {
     checkDbConnection();
-    document.getElementById("viewAllPlayersBtn").addEventListener("click", viewAllPlayers);
+    document.getElementById("viewPlayersTable").addEventListener("click", fetchAndDisplayPlayers);
+    document.getElementById("insertPlayer").addEventListener("submit", insertPlayer);
+    document.getElementById("updatePlayerEmail").addEventListener("submit", updatePlayerEmail);
     document.getElementById("divAchievementBtn").addEventListener("click", viewAcByAll);
-    document.getElementById("updatePlayer").addEventListener("submit", updatePlayer);
     document.getElementById("formProjMob").addEventListener("submit", projMob);
     document.getElementById('hideMobBtn').addEventListener("click", closeProjMobTable);
-    document.getElementById("insertPlayer").addEventListener("submit", insertPlayer);
 };
 
 // General function to refresh the displayed table data.
 // You can invoke this after any table-modifying operation to keep consistency.
-//function fetchTableData() {
-//    fetchAndDisplayUsers();
-//}
+function fetchTableData() {
+    fetchAndDisplayPlayers();
+}
