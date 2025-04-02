@@ -47,6 +47,25 @@
             </tbody>
         </table>
 
+        <h3>Insert</h3>
+        <form id="insertPlayer">
+            Username: <input type="text" id="insertUsername" placeholder="Enter Username" maxlength="16" required>
+            <br>
+            User Credentials: <input type="text" id="insertUserCredentials" placeholder="Enter User Credentials" maxlength="255">
+            <br>
+            XP: <input type="number" id="insertXp" placeholder="Enter XP Amount">
+            <br>
+            Email: <input type="text" id="insertEmail" placeholder="Enter Email" maxlength="255">
+            <br>
+            Skin: <input type="number" id="insertSkin" placeholder="Enter Skin Number">
+            <br>
+            IID: <input type="number" id="insertIid" placeholder="Enter IID" required>
+
+            <button type="submit">Insert Player</button>
+            <br>
+        </form>
+        <div id="insertResultMsg"></div>
+        
         <h3>Update</h3>
         <form id="updatePlayer">
             <label>Enter username: <input type="text" id="updateUsername" style="width: 150px"></label>
