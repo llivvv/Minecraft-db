@@ -72,6 +72,12 @@ router.get('/havingSaved', async (req, res) => {
     res.json({data: tableContent});
 });
 
+// for AGGREGATION BY GROUP BY on Achieve
+router.get('/groupByAchieve', async (req, res) => {
+    const tableContent = await appService.groupByAchieve();
+    res.json({data: tableContent});
+});
+
 // for join on Player and Achieve
 router.get('/join-player-achieve', async (req, res) => {
     const { username } = req.query;
