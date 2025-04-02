@@ -173,6 +173,42 @@ function closeProjMobTable() {
 	hideBtn.classList.add('hide');
 }
 
+async function insertPlayer(event) {
+    event.preventDefault()
+
+    const usernameValue = document.getElementById('insertUsername').value;
+    const userCredentialsValue = document.getElementById('insertUserCredentials').value;
+    const xpValue = document.getElementById('insertXp').value;
+    const emailValue = document.getElementById('insertEmail').value;
+    const skinValue = document.getElementById('insertSkin').value;
+    const iidValue = document.getElementById('insertIid').value;
+
+    const response = await fetch('/insertPlayer', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: usernameValue,
+            user_credentials: userCredentialsValue,
+            xp: xpValue,
+            email: emailValue,
+            skin: skinValue,
+            iid: iidValue
+        })
+    });
+
+    const responseData = await response.json();
+    const messageElement = document.getElementById('insertResultMsg');
+
+    if (responseData.success) {
+        messageElement.textContent = "Player inserted successfully!";
+    } else {
+        messageElement.textContent = "Error inserting Player!";
+    }
+
+    viewAllPlayers();
+}
 
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
@@ -184,6 +220,7 @@ window.onload = function() {
     document.getElementById("updatePlayer").addEventListener("submit", updatePlayer);
     document.getElementById("formProjMob").addEventListener("submit", projMob);
     document.getElementById('hideMobBtn').addEventListener("click", closeProjMobTable);
+    document.getElementById("insertPlayer").addEventListener("submit", insertPlayer);
 };
 
 // General function to refresh the displayed table data.
