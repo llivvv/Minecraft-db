@@ -15,6 +15,7 @@
 let isShowPlayers = false;
 let isShowAcByAll = false;
 let isShowHaving = false;
+let isShowGroupBy = false;
 
 // This function checks the database connection and updates its status on the frontend.
 async function checkDbConnection() {
@@ -283,6 +284,38 @@ async function viewHaving() {
     isShowHaving = !isShowHaving;
 }
 
+// for AGGREGATION BY GROUP BY of Achieve
+async function viewGroupBy() {
+    const tableElement = document.getElementById('groupBy');
+    const tableBody = document.getElementById('tbodyGroupBy');
+
+    // hide table
+    if (isShowGroupBy) {
+        tableElement.classList.add("hide");
+        document.getElementById("groupBtn").innerHTML = 'View';
+
+        //fetch and show table
+    } else {
+        document.getElementById("groupBtn").innerHTML = 'Hide';
+
+        const response = await fetch('/groupByAchieve', {
+            method: 'GET'
+        });
+
+        const responseData = await response.json();
+        const acByAll = responseData.data;
+
+        if (tableBody) {
+            tableBody.innerHTML = '';
+        }
+
+        makeTableRows(acByAll, tableBody);
+        tableElement.classList.remove("hide");
+    }
+
+    isShowGroupBy = !isShowGroupBy;
+}
+
 // for join Player and Achieve
 async function joinPlayer(e) {
     e.preventDefault();
@@ -324,7 +357,7 @@ window.onload = function() {
     document.getElementById("delPlayer").addEventListener("submit", deletePlayer);
     document.getElementById("havBtn").addEventListener("click", viewHaving);
     document.getElementById('joinPlayerAndAchieve').addEventListener("submit", joinPlayer);
-
+    document.getElementById("groupBtn").addEventListener("click", viewGroupBy);
 };
 
 // General function to refresh the displayed table data.
