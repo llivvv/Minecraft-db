@@ -219,7 +219,30 @@
     </table>
 </div>
 
-<br><hr><br>
+<br><hr><br> <!-- ========================================================================= -->
+
+<div class="container">
+    <h3>Player Achievements</h3>
+    <form id="joinPlayerAndAchieve">
+        Username: <input type="text" id="joinUsername" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <table id="tableJoinTable" class="hide">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>XP</th>
+            <th>Email</th>
+            <th>Achievement Name</th>
+            <th>Date Received</th>
+            <th>Progress</th>
+        </tr>
+        </thead>
+        <tbody id="tbodyJoinResult"></tbody>
+    </table>
+</div>
+
 
 <!-- ===================================================================================== -->
 <!-- External JavaScript file that contains the functionality/logic for the operations above. -->

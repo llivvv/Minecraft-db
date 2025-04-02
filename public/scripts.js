@@ -283,6 +283,33 @@ async function viewHaving() {
     isShowHaving = !isShowHaving;
 }
 
+// for join Player and Achieve
+async function joinPlayer(e) {
+    e.preventDefault();
+
+    const usernameValue = document.getElementById('joinUsername').value;
+    const tableElement = document.getElementById('tableJoinTable');
+    const tableBody = document.getElementById('tbodyJoinResult');
+
+    const response = await fetch(`/join-player-achieve?username=${encodeURIComponent(usernameValue)}`, {
+        method: 'GET'
+    });
+    const responseData = await response.json();
+    const joinsContent = responseData.data;
+
+    tableBody.innerHTML = '';
+
+    joinsContent.forEach(row => {
+        const newRow = tableBody.insertRow();
+        row.forEach((cellVal) => {
+            const cell = newRow.insertCell();
+            cell.textContent = cellVal;
+        });
+    });
+
+    tableElement.classList.remove('hide');
+}
+
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
 // Add or remove event listeners based on the desired functionalities.
@@ -296,6 +323,8 @@ window.onload = function() {
     document.getElementById('hideMobBtn').addEventListener("click", closeProjMobTable);
     document.getElementById("delPlayer").addEventListener("submit", deletePlayer);
     document.getElementById("havBtn").addEventListener("click", viewHaving);
+    document.getElementById('joinPlayerAndAchieve').addEventListener("submit", joinPlayer);
+
 };
 
 // General function to refresh the displayed table data.

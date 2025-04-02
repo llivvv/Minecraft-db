@@ -177,6 +177,23 @@ async function havingSaved() {
     });
 }
 
+// join on Player and Achieve
+async function joinPlayerAchieve(username) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `SELECT p.username, p.xp, p.email, a.aname, a.date_received, a.progress
+            FROM PlayerHas p
+            JOIN Achieve a ON p.username = a.username
+            WHERE p.username = :username`,
+            [username]
+        );
+
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
 module.exports = {
     testOracleConnection,
     fetchPlayersFromDb,
@@ -185,5 +202,6 @@ module.exports = {
     deletePlayer,
     divAchievement,
     projMob,
-    havingSaved
+    havingSaved,
+    joinPlayerAchieve
 };

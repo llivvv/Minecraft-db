@@ -72,4 +72,12 @@ router.get('/havingSaved', async (req, res) => {
     res.json({data: tableContent});
 });
 
+// for join on Player and Achieve
+router.get('/join-player-achieve', async (req, res) => {
+    const { username } = req.query;
+    const updateResult = await appService.joinPlayerAchieve(username);
+    res.json({ data: updateResult });
+});
+
+
 module.exports = router;
