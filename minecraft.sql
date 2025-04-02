@@ -212,6 +212,7 @@ INSERT INTO	Inventory(iid, remaining_slots) VALUES (3, 0);
 INSERT INTO	Inventory(iid, remaining_slots) VALUES (4, 27);
 INSERT INTO	Inventory(iid, remaining_slots) VALUES (5, 1);
 INSERT INTO	Inventory(iid, remaining_slots) VALUES (6, 9);
+INSERT INTO     Inventory(iid, remaining_slots) VALUES (7, 1);
 
 INSERT INTO	Servers(IPaddress, sname, player_capacity)
 VALUES	('123.456.1.1', 'server1', 100000);
