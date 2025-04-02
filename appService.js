@@ -177,6 +177,20 @@ async function havingSaved() {
     });
 }
 
+// AGGREGATION BY GROUP BY on Achieve
+async function groupByAchieve() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(`
+        SELECT aname, COUNT(*)
+        FROM Achieve
+        GROUP BY aname
+        `);
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
 // join on Player and Achieve
 async function joinPlayerAchieve(username) {
     return await withOracleDB(async (connection) => {
@@ -203,5 +217,6 @@ module.exports = {
     divAchievement,
     projMob,
     havingSaved,
+    groupByAchieve,
     joinPlayerAchieve
 };
