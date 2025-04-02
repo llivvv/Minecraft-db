@@ -66,4 +66,10 @@ router.get('/projMob', async (req, res) => {
     res.json({ data: tableContent });
 });
 
+// for having on Saved relation
+router.get('/havingSaved', async (req, res) => {
+    const tableContent = await appService.havingSaved();
+    res.json({data: tableContent});
+});
+
 module.exports = router;

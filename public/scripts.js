@@ -14,6 +14,7 @@
 
 let isShowPlayers = false;
 let isShowAcByAll = false;
+let isShowHaving = false;
 
 // This function checks the database connection and updates its status on the frontend.
 async function checkDbConnection() {
@@ -250,6 +251,38 @@ function closeProjMobTable() {
 	hideBtn.classList.add('hide');
 }
 
+// fetches popular worlds (having query)
+async function viewHaving() {
+	const tableElement = document.getElementById('having');
+    const tableBody = document.getElementById('tbodyHaving');
+
+	// hide table
+    if (isShowHaving) {
+        tableElement.classList.add("hide");
+        document.getElementById("havBtn").innerHTML = 'View Popular Worlds';
+
+    //fetch and show table
+    } else {
+        document.getElementById("havBtn").innerHTML = 'Hide Popular Worlds';
+
+        const response = await fetch('/havingSaved', {
+            method: 'GET'
+        });
+
+        const responseData = await response.json();
+        const acByAll = responseData.data;
+
+        if (tableBody) {
+            tableBody.innerHTML = '';
+        }
+
+        makeTableRows(acByAll, tableBody);
+        tableElement.classList.remove("hide");
+    }
+
+    isShowHaving = !isShowHaving;
+}
+
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
 // Add or remove event listeners based on the desired functionalities.
@@ -262,6 +295,7 @@ window.onload = function() {
     document.getElementById("formProjMob").addEventListener("submit", projMob);
     document.getElementById('hideMobBtn').addEventListener("click", closeProjMobTable);
     document.getElementById("delPlayer").addEventListener("submit", deletePlayer);
+    document.getElementById("havBtn").addEventListener("click", viewHaving);
 };
 
 // General function to refresh the displayed table data.

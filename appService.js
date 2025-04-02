@@ -162,6 +162,21 @@ async function projMob(params) {
   });
 }
 
+// Having on Saved (worlds saved by more than 2 players)
+async function havingSaved() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(`
+        SELECT join_code, COUNT(*)
+        FROM Saved
+        GROUP BY join_code
+        HAVING COUNT(*) > 2
+        `);
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
 module.exports = {
     testOracleConnection,
     fetchPlayersFromDb,
@@ -170,4 +185,5 @@ module.exports = {
     deletePlayer,
     divAchievement,
     projMob,
+    havingSaved
 };
