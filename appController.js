@@ -40,5 +40,14 @@ router.get('/projMob', async (req, res) => {
     res.json({ data: tableContent });
 });
 
+router.post('/insertPlayer', async (req, res) => {
+    const { username, user_credentials, xp, email, skin, iid } = req.body;
+    const insertResult = await appService.insertPlayer(username, user_credentials, xp, email, skin, iid);
+    if (insertResult) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
 
 module.exports = router;
