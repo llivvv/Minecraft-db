@@ -140,11 +140,25 @@ async function projMob(params) {
   });
 }
 
+async function insertPlayer(username, user_credentials, xp, email, skin, iid) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `INSERT INTO PlayerHas (username, user_credentials, xp, email, skin, iid) VALUES (:username, :user_credentials, :xp, :email, :skin, :iid)`,
+            [username, user_credentials, xp, email, skin, iid],
+            { autocommit: true }
+        );
+
+        return result.rowsAffected && result.rowsAffected > 0;
+    }).catch(() => {
+        return false;
+    })
+}
 
 module.exports = {
     testOracleConnection,
     viewPlayerHas,
     divAchievement,
     updatePlayer,
-    projMob
+    projMob,
+    insertPlayer
 };
