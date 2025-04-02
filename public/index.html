@@ -28,10 +28,8 @@
 
 <!--for player table-->
 <div class="container">
-    <button id="viewAllPlayersBtn">View All Players</button>
-
+    <button id="viewPlayersTable">View All Players</button>
     <div id="playerSection" class="hide">
-
         <table id="allPlayers">
             <thead>
             <tr>
@@ -65,16 +63,16 @@
             <br>
         </form>
         <div id="insertResultMsg"></div>
-        
+
         <h3>Update</h3>
-        <form id="updatePlayer">
-            <label>Enter username: <input type="text" id="updateUsername" style="width: 150px"></label>
-            <br>
-            <label>Enter xp: <input type="text" id="updateXp" style="width: 150px"></label>
-            <br>
-            <label>Enter email: <input type="text" id="updateEmail" style="width: 300px"></label>
-            <button type="submit">Update Player</button>
+        <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do
+            anything.</p>
+        <form id="updatePlayerEmail">
+            Username: <input type="text" id="updateUsername" placeholder="Enter Username" maxlength="16" required><br>
+            Email: <input type="text" id="updateEmail" placeholder="Enter Email" maxlength="255"><br>
+            <button type="submit">Update Email</button>
         </form>
+        <div id="updateEmailResultMsg"></div>
 
     </div>
 </div>
