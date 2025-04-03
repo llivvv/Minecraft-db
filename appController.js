@@ -21,15 +21,23 @@ router.get('/players', async (req, res) => {
     res.json({ data: tableContent });
 });
 
-router.post('/insertPlayer', async (req, res) => {
-    const { username, user_credentials, xp, email, skin, iid } = req.body;
-    const insertResult = await appService.insertPlayer(username, user_credentials, xp, email, skin, iid);
-    if (insertResult) {
-        res.json({ success: true });
-    } else {
-        res.status(500).json({ success: false });
-    }
-});
+// for insert on PlayerHas
+router.post("/insert-player", async (req, res) => {
+  //    const { username, user_credentials, xp, email, skin, iid } = req.body;
+      const username = req.body.username;
+      const user_credentials = req.body.userCredentials;
+      const xp = req.body.xp;
+      const email = req.body.email;
+      const skin = req.body.skin;
+      const iid = req.body.iid;
+
+      const insertResult = await appService.insertPlayer(username, user_credentials, xp, email, skin, iid);
+      if (insertResult) {
+          res.json({ success: true });
+      } else {
+          res.status(500).json({ success: false });
+      }
+  });
 
 // for update on PlayerHas
 router.post("/update-player-email", async (req, res) => {

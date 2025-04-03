@@ -85,19 +85,24 @@ async function fetchPlayersFromDb() {
     });
 }
 
-// insert on PlayerHas
+// insert PlayerHas
 async function insertPlayer(username, user_credentials, xp, email, skin, iid) {
+	const xpInt = parseInt(xp, 10);
+    const skinInt = parseInt(skin, 10);
+    const iidInt = parseInt(iid, 10);
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            `INSERT INTO PlayerHas (username, user_credentials, xp, email, skin, iid) VALUES (:username, :user_credentials, :xp, :email, :skin, :iid)`,
-            [username, user_credentials, xp, email, skin, iid],
-            { autocommit: true }
+            `INSERT
+             INTO PLAYERHAS (username, user_credentials, xp, email, skin, iid)
+             VALUES (:username, :user_credentials, :xp, :email, :skin, :iid)`,
+            [username, user_credentials, xpInt, email, skinInt, iidInt],
+            { autoCommit: true }
         );
 
         return result.rowsAffected && result.rowsAffected > 0;
     }).catch(() => {
         return false;
-    })
+    });
 }
 
 // update non primary key on PlayerHas

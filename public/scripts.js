@@ -76,41 +76,30 @@ async function fetchAndDisplayPlayers() {
     playerSection.classList.remove('hide');
 }
 
-async function insertPlayer(event) {
-    event.preventDefault()
+// new insert function
+async function insertPlayer(e) {
+  e.preventDefault();
 
-    const usernameValue = document.getElementById('insertUsername').value;
-    const userCredentialsValue = document.getElementById('insertUserCredentials').value;
-    const xpValue = document.getElementById('insertXp').value;
-    const emailValue = document.getElementById('insertEmail').value;
-    const skinValue = document.getElementById('insertSkin').value;
-    const iidValue = document.getElementById('insertIid').value;
+  const form = document.getElementById("insertPlayer");
+  const formData = new FormData(form);
 
-    const response = await fetch('/insertPlayer', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username: usernameValue,
-            user_credentials: userCredentialsValue,
-            xp: xpValue,
-            email: emailValue,
-            skin: skinValue,
-            iid: iidValue
-        })
-    });
+  const response = await fetch('/insert-player', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(Object.fromEntries(formData))
+  });
 
-    const responseData = await response.json();
-    const messageElement = document.getElementById('insertResultMsg');
+  const responseData = await response.json();
+  const messageElement = document.getElementById('insertResultMsg');
 
-    if (responseData.success) {
-        messageElement.textContent = "Player inserted successfully!";
-    } else {
-        messageElement.textContent = "Error inserting Player!";
-    }
-
-    fetchAndDisplayPlayers();
+  if (responseData.success) {
+      messageElement.textContent = "Player inserted successfully!";
+      fetchTableData();
+  } else {
+      messageElement.textContent = "Error inserting Player!";
+  }
 }
 
 async function updatePlayerEmail(e) {
