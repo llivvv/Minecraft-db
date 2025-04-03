@@ -10,6 +10,7 @@ let isShowAcByAll = false;
 let isShowHaving = false;
 let isShowGroupBy = false;
 let isShowNestedAgg = false;
+let c = 2;
 
 // This function checks the database connection and updates its status on the frontend.
 async function checkDbConnection() {
@@ -368,6 +369,84 @@ async function joinPlayer(e) {
     tableElement.classList.remove('hide');
 }
 
+function addCondition() {
+    const container = document.getElementById('selectionContainer');
+
+    container.appendChild(document.createElement("br"));
+
+    const op = document.createElement("select");
+    op.name = "operation";
+    op.id = "operation" + c;
+    op.options[op.options.length] = new Option('AND', 'AND');
+    op.options[op.options.length] = new Option('OR', 'OR');
+    container.appendChild(op);
+
+    container.appendChild(document.createElement("br"));
+
+    const label = document.createElement("label");
+    label.for = "attribute" + c;
+    label.text = "Choose Attribute " + c + ":";
+    container.appendChild(label);
+
+    container.appendChild(document.createElement("br"));
+
+    const select = document.createElement("select");
+    select.name = "attribute";
+    select.id = "attribute" + c;
+    select.options[select.options.length] = new Option('IP Address', 'IPaddress');
+    select.options[select.options.length] = new Option('Server Name', 'sname');
+    select.options[select.options.length] = new Option('Player Capacity', 'player_capacity');
+    container.appendChild(select);
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.id = "condition" + c;
+    input.name = "condition";
+    input.placeholder = "What should this attribute be equal to?";
+    input.maxLength = "255";
+    input.required = true;
+    container.appendChild(input);
+
+    container.appendChild(document.createElement("br"));
+    c++;
+}
+
+// SELECTION on Server
+async function selectServer(e) {
+    e.preventDefault();
+
+    const tableElement = document.getElementById('selection');
+    const tableBody = document.getElementById('tbodySelection');
+
+    const attribute = document.getElementById('attribute1').value;
+    const condition = document.getElementById('condition1').value;
+    let clause1 = attribute + "=" + condition;
+
+    for (i = 2; i <= c; i++) {
+        const operation = document.getElementById('operation' + i).value;
+        const att = document.getElementById('attribute' + i).value;
+        const cond = document.getElementById('condition' + i).value;
+        const clause = att + "=" + cond;
+        clause1 = clause1 + " " + operation + " " + clause;
+    }
+
+    console.log(clause1);
+
+    const response = await fetch(`/selectServer?conds=${clause1}`, {
+        method: 'GET',
+    });
+
+    const responseData = await response.json();
+    const selectServer = responseData.data;
+
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+
+    makeTableRows(selectServer, tableBody);
+    tableElement.classList.remove('hide');
+}
+
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
 window.onload = function() {
@@ -383,6 +462,8 @@ window.onload = function() {
     document.getElementById("groupBtn").addEventListener("click", viewGroupBy);
     document.getElementById('nestedAggBtn').addEventListener("click", nestedProgress);
     document.getElementById('joinPlayerAndAchieve').addEventListener("submit", joinPlayer);
+    document.getElementById("selectionForm").addEventListener("submit", selectServer);
+    document.getElementById("addCondition").addEventListener("click", addCondition);
 };
 
 // General function to refresh the displayed table data.
