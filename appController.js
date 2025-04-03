@@ -77,6 +77,13 @@ router.get('/projMob', async (req, res) => {
     res.json({ data: tableContent });
 });
 
+// for SELECTION on Server
+router.get('/selectServer', async (req, res) => {
+    const clauses = req.query.conds;
+    const tableContent = await appService.selectServer(clauses);
+    res.json({ data: tableContent });
+});
+
 // for AGGREGATION with HAVING on Saved
 router.get('/havingSaved', async (req, res) => {
     const tableContent = await appService.havingSaved();
