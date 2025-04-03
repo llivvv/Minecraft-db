@@ -428,9 +428,7 @@ async function selectServer(e) {
         clause1 = clause1 + " " + operation + " " + clause;
     }
 
-    console.log(clause1);
-
-    const response = await fetch(`/selectServer?conds=${clause1}`, {
+    const response = await fetch(`/selectServer?condition=${encodeURIComponent(clause1)}`, { // what is this :(
         method: 'GET',
     });
 
@@ -460,8 +458,11 @@ window.onload = function() {
     document.getElementById("groupBtn").addEventListener("click", viewGroupBy);
     document.getElementById('nestedAggBtn').addEventListener("click", nestedProgress);
     document.getElementById('joinPlayerAndAchieve').addEventListener("submit", joinPlayer);
+    document.getElementById("addCondition").addEventListener("click", function(e) {
+        e.preventDefault();
+        addCondition();
+    });
     document.getElementById("selectionForm").addEventListener("submit", selectServer);
-    document.getElementById("addCondition").addEventListener("click", addCondition);
 };
 
 // General function to refresh the displayed table data.
