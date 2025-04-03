@@ -242,8 +242,8 @@
         <tbody id="tbodyJoinResult"></tbody>
     </table>
 </div>
-    
-<br><hr><br>
+
+<br><hr><br> <!-- ========================================================================= -->
 
 <!--for AGGREGATION BY GROUP BY query-->
 <div class="container">
@@ -260,7 +260,23 @@
         <tbody id="tbodyGroupBy">
         </tbody>
     </table>
+
+    <h3>For each achievement, show the average progress only if that average is greater than the overall
+        average progress of all achievements.</h3>
+    <button id="nestedAggBtn">View Average Progress</button>
+    <table id="nestedAggTable" class="hide">
+        <thead>
+        <tr>
+            <th>Achievement</th>
+            <th>Average Progress</th>
+        </tr>
+        </thead>
+        <tbody id="tbodyNestAgg"></tbody>
+    </table>
 </div>
+
+<br><hr><br> <!-- ========================================================================= -->
+
 
 <!-- ===================================================================================== -->
 <!-- External JavaScript file that contains the functionality/logic for the operations above. -->

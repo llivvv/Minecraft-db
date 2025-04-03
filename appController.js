@@ -89,9 +89,16 @@ router.get('/groupByAchieve', async (req, res) => {
 // for join on Player and Achieve
 router.get('/join-player-achieve', async (req, res) => {
     const { username } = req.query;
-    const updateResult = await appService.joinPlayerAchieve(username);
-    res.json({ data: updateResult });
+    const joinResult = await appService.joinPlayerAchieve(username);
+    res.json({ data: joinResult });
 });
+
+// for nested aggregation
+router.get('/nested-agg-avg', async (req, res) => {
+    const nestedResult = await appService.nestedAggAvgProgress();
+    res.json({ data: nestedResult });
+});
+
 
 
 module.exports = router;

@@ -16,6 +16,7 @@ let isShowPlayers = false;
 let isShowAcByAll = false;
 let isShowHaving = false;
 let isShowGroupBy = false;
+let isShowNestedAgg = false;
 
 // This function checks the database connection and updates its status on the frontend.
 async function checkDbConnection() {
@@ -54,26 +55,33 @@ async function fetchAndDisplayPlayers() {
     const tableElement = document.getElementById('allPlayers');
     const tableBody = document.getElementById('tbodyAllPlayers');
 
-    const response = await fetch('/players', {
-        method: 'GET'
-    });
-    const responseData = await response.json();
-    const playersContent = responseData.data;
+    if (isShowPlayers) {
+        tableElement.classList.add('hide');
+        document.getElementById("viewPlayersTable").innerHTML = 'View All Players';
+    } else {
+        document.getElementById("viewPlayersTable").innerHTML = 'Hide All Players';
 
-    if (tableBody) {
-        tableBody.innerHTML = '';
-    }
-
-    playersContent.forEach(user => {
-        const row = tableBody.insertRow();
-        user.forEach((field, index) => {
-            const cell = row.insertCell(index);
-            cell.textContent = field;
+        const response = await fetch('/players', {
+            method: 'GET'
         });
-    });
+        const responseData = await response.json();
+        const playersContent = responseData.data;
 
-    const playerSection = document.getElementById('playerSection');
-    playerSection.classList.remove('hide');
+        if (tableBody) {
+            tableBody.innerHTML = '';
+        }
+
+        playersContent.forEach(user => {
+            const row = tableBody.insertRow();
+            user.forEach((field, index) => {
+                const cell = row.insertCell(index);
+                cell.textContent = field;
+            });
+        });
+        const playerSection = document.getElementById('playerSection');
+        playerSection.classList.remove('hide');
+    }
+    isShowPlayers = !isShowPlayers;
 }
 
 // new insert function
@@ -332,6 +340,38 @@ async function joinPlayer(e) {
     tableElement.classList.remove('hide');
 }
 
+// for nested aggregation on Player and Achieve
+async function nestedProgress() {
+    const tableElement = document.getElementById('nestedAggTable');
+    const tableBody = document.getElementById('tbodyNestAgg');
+
+    if (isShowNestedAgg) {
+        tableElement.classList.add('hide');
+        document.getElementById("nestedAggBtn").innerHTML = 'View Average Progress';
+    } else {
+        document.getElementById("nestedAggBtn").innerHTML = 'Hide Average Progress';
+
+        const response = await fetch('/nested-agg-avg', {
+            method: 'GET'
+        });
+        const responseData = await response.json();
+        const nestedContent = responseData.data;
+
+        if (tableBody) tableBody.innerHTML = '';
+
+        nestedContent.forEach(row => {
+            const newRow = tableBody.insertRow();
+            row.forEach((cellVal) => {
+                const cell = newRow.insertCell();
+                cell.textContent = cellVal;
+            });
+        });
+        tableElement.classList.remove('hide');
+    }
+    isShowNestedAgg = !isShowNestedAgg;
+}
+
+
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
 // Add or remove event listeners based on the desired functionalities.
@@ -347,6 +387,7 @@ window.onload = function() {
     document.getElementById("havBtn").addEventListener("click", viewHaving);
     document.getElementById('joinPlayerAndAchieve').addEventListener("submit", joinPlayer);
     document.getElementById("groupBtn").addEventListener("click", viewGroupBy);
+    document.getElementById('nestedAggBtn').addEventListener("click", nestedProgress);
 };
 
 // General function to refresh the displayed table data.

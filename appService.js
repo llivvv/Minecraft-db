@@ -213,6 +213,24 @@ async function joinPlayerAchieve(username) {
     });
 }
 
+// nested aggregation with GROUP BY
+async function nestedAggAvgProgress() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(`
+            SELECT a.aname, AVG(a.progress) AS avg_progress
+            FROM Achieve a
+            GROUP BY a.aname
+            HAVING AVG(a.progress) > (
+                SELECT AVG(a2.progress)
+                FROM Achieve a2
+            )
+        `,);
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
 module.exports = {
     testOracleConnection,
     fetchPlayersFromDb,
@@ -223,5 +241,6 @@ module.exports = {
     projMob,
     havingSaved,
     groupByAchieve,
-    joinPlayerAchieve
+    joinPlayerAchieve,
+    nestedAggAvgProgress,
 };
