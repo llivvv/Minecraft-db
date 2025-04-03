@@ -98,12 +98,11 @@ async function insertPlayer(e) {
 
   if (responseData.success) {
       messageElement.textContent = "Player inserted successfully!";
+      form.reset();
       fetchTableData();
   } else {
       messageElement.textContent = "Error inserting Player!";
   }
-
-  form.reset();
 }
 
 // for UPDATE on PlayerHas
@@ -112,9 +111,6 @@ async function updatePlayerEmailXp(e) {
 
   const form = document.getElementById("updatePlayerEmailXp");
   const formData = new FormData(form);
-//
-//    const usernameValue = document.getElementById('updateUsername').value;
-//    const emailValue = document.getElementById('updateEmail').value;
 
   const response = await fetch('/update-player-email-xp', {
       method: 'POST',
@@ -129,6 +125,7 @@ async function updatePlayerEmailXp(e) {
 
   if (responseData.success) {
       messageElement.textContent = "Email and Xp updated successfully!";
+      form.reset();
       fetchTableData();
   } else {
       messageElement.textContent = "Error updating email and Xp!";
@@ -156,6 +153,7 @@ async function deletePlayer(e) {
 
     if (responseData.success) {
         messageElement.textContent = "Player deleted successfully!";
+        document.getElementById('delPlayer').reset();
         fetchTableData();
     } else {
         messageElement.textContent = "Error deleting player!";

@@ -86,14 +86,20 @@ async function fetchPlayersFromDb() {
 
 // INSERT on PlayerHas
 async function insertPlayer(username, user_credentials, xp, email, skin, iid) {
-	const xpInt = parseInt(xp, 10);
-    const skinInt = parseInt(skin, 10);
-    const iidInt = parseInt(iid, 10);
+//	console.log(!(xp));
+//	console.log('reached here');
+	let xpInt;
+	let skinInt;
+	const iidInt = parseInt(iid, 10);
+
+	if (xp) xpInt = parseInt(xp, 10);
+	if (skin) skinInt = parseInt(skin, 10);
+
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
             `INSERT
              INTO PLAYERHAS (username, user_credentials, xp, email, skin, iid)
-             VALUES (:username, :user_credentials, :xp, :email, :skin, :iid)`,
+             VALUES (:username, :user_credentials, :xpInt, :email, :skinInt, :iid)`,
             [username, user_credentials, xpInt, email, skinInt, iidInt],
             { autoCommit: true }
         );
