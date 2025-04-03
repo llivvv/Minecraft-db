@@ -12,9 +12,7 @@
 </head>
 <body>
 <!-- ===================================================================================== -->
-<!-- Display the current status of the database connection.
-     !!HERE TO HELP U DEBUGGING, NOT REQUIRED IN YOUR OWN PROJECT!!
-     -->
+<!-- Display the current status of the database connection. -->
 <h1>Database Connection Status:
     <!-- An in-line placeholder to display connection status. -->
     <span id="dbStatus"> </span>
@@ -26,7 +24,7 @@
 
 <br><hr><br> <!-- ========================================================================= -->
 
-<!--for player table-->
+<!--for INSERT, UPDATE, DELETE on PlayerHas-->
 <div class="container">
     <button id="viewPlayersTable">View All Players</button>
     <div id="playerSection" class="hide">
@@ -86,10 +84,9 @@
     </div>
 </div>
 
-
 <br><hr><br> <!-- ========================================================================= -->
 
-<!--for projection on Mob1-->
+<!--for PROJECTION on Mob1-->
 <div id="projFormDiv">
     <h3>Select Mob attributes to view:</h3>
     <form id="formProjMob">
@@ -181,12 +178,9 @@
     <button id="hideMobBtn" class="hide">Close</button>
 </div>
 
-<br />
-<hr />
-<br />
+<br><hr><br> <!-- ========================================================================= -->
 
-
-<!--for division query-->
+<!--for DIVISION query-->
 <div class="container">
     <button id="divAchievementBtn">View Achievements achieved by all players</button>
     <table id="divAchievement" class="hide">
@@ -201,7 +195,7 @@
     </table>
 </div>
 
-<br><hr><br>
+<br><hr><br> <!-- ========================================================================= -->
 
 <!--for HAVING query-->
 <div class="container">
@@ -222,6 +216,40 @@
 
 <br><hr><br> <!-- ========================================================================= -->
 
+<!--for AGGREGATIONS with GROUP BY-->
+<div class="container">
+    <h3>For each Achievement, view number of Players that have achieved it.</h3>
+    <button id="groupBtn">View</button>
+    <table id="groupBy" class="hide">
+        <thead>
+        <tr>
+            <!--Table head, need to be adjusted accordingly to align with your own.-->
+            <th>Achievement Name</th>
+            <th># of Players That Have Achieved It</th>
+        </tr>
+        </thead>
+        <tbody id="tbodyGroupBy">
+        </tbody>
+    </table>
+
+    <!--for NESTED-->
+    <h3>For each achievement, show the average progress only if that average is greater than the overall
+        average progress of all achievements.</h3>
+    <button id="nestedAggBtn">View Average Progress</button>
+    <table id="nestedAggTable" class="hide">
+        <thead>
+        <tr>
+            <th>Achievement</th>
+            <th>Average Progress</th>
+        </tr>
+        </thead>
+        <tbody id="tbodyNestAgg"></tbody>
+    </table>
+</div>
+
+<br><hr><br> <!-- ========================================================================= -->
+
+<!--for JOIN on PlayerHas and Achieve-->
 <div class="container">
     <h3>Player Achievements</h3>
     <form id="joinPlayerAndAchieve">
@@ -241,38 +269,6 @@
         </tr>
         </thead>
         <tbody id="tbodyJoinResult"></tbody>
-    </table>
-</div>
-
-<br><hr><br> <!-- ========================================================================= -->
-
-<!--for AGGREGATION BY GROUP BY query-->
-<div class="container">
-    <h3>For each Achievement, view number of Players that have achieved it.</h3>
-    <button id="groupBtn">View</button>
-    <table id="groupBy" class="hide">
-        <thead>
-        <tr>
-            <!--Table head, need to be adjusted accordingly to align with your own.-->
-            <th>Achievement Name</th>
-            <th># of Players That Have Achieved It</th>
-        </tr>
-        </thead>
-        <tbody id="tbodyGroupBy">
-        </tbody>
-    </table>
-
-    <h3>For each achievement, show the average progress only if that average is greater than the overall
-        average progress of all achievements.</h3>
-    <button id="nestedAggBtn">View Average Progress</button>
-    <table id="nestedAggTable" class="hide">
-        <thead>
-        <tr>
-            <th>Achievement</th>
-            <th>Average Progress</th>
-        </tr>
-        </thead>
-        <tbody id="tbodyNestAgg"></tbody>
     </table>
 </div>
 

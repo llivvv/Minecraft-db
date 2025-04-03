@@ -5,7 +5,6 @@ const router = express.Router();
 
 // ----------------------------------------------------------
 // API endpoints
-// Modify or extend these routes based on your project's needs.
 router.get('/check-db-connection', async (req, res) => {
     const isConnect = await appService.testOracleConnection();
     if (isConnect) {
@@ -15,13 +14,13 @@ router.get('/check-db-connection', async (req, res) => {
     }
 });
 
-// fetch Players table
+// fetch players table
 router.get('/players', async (req, res) => {
     const tableContent = await appService.fetchPlayersFromDb();
     res.json({ data: tableContent });
 });
 
-// for insert on PlayerHas
+// for INSERT on PlayerHas
 router.post("/insert-player", async (req, res) => {
   //    const { username, user_credentials, xp, email, skin, iid } = req.body;
       const username = req.body.username;
@@ -39,7 +38,7 @@ router.post("/insert-player", async (req, res) => {
       }
   });
 
-  // for update on PlayerHas
+// for UPDATE on PlayerHas
 router.post("/update-player-email-xp", async (req, res) => {
 
   const username = req.body.username;
@@ -54,7 +53,7 @@ router.post("/update-player-email-xp", async (req, res) => {
   }
 });
 
-// for delete on PlayerHas
+// for DELETE on PlayerHas
 router.post("/delete-player", async (req, res) => {
     const { username } = req.body;
     const deleteResult = await appService.deletePlayer(username);
@@ -65,44 +64,43 @@ router.post("/delete-player", async (req, res) => {
     }
 });
 
-// for division on Achievement
+// for DIVISION on Achievement
 router.get('/divAchievement', async (req, res) => {
     const tableContent = await appService.divAchievement();
     res.json({data: tableContent});
 });
 
-// for projection on Mob1
+// for PROJECTION on Mob1
 router.get('/projMob', async (req, res) => {
     const params = req.query.atts;
     const tableContent = await appService.projMob(params);
     res.json({ data: tableContent });
 });
 
-// for having on Saved relation
+// for AGGREGATION with HAVING on Saved
 router.get('/havingSaved', async (req, res) => {
     const tableContent = await appService.havingSaved();
     res.json({data: tableContent});
 });
 
-// for AGGREGATION BY GROUP BY on Achieve
+// for AGGREGATION with GROUP BY on Achieve
 router.get('/groupByAchieve', async (req, res) => {
     const tableContent = await appService.groupByAchieve();
     res.json({data: tableContent});
 });
 
-// for join on Player and Achieve
-router.get('/join-player-achieve', async (req, res) => {
-    const { username } = req.query;
-    const joinResult = await appService.joinPlayerAchieve(username);
-    res.json({ data: joinResult });
-});
-
-// for nested aggregation
+// for NESTED AGGREGATION with GROUP BY on Achieve
 router.get('/nested-agg-avg', async (req, res) => {
     const nestedResult = await appService.nestedAggAvgProgress();
     res.json({ data: nestedResult });
 });
 
+// for JOIN on Player and Achieve
+router.get('/join-player-achieve', async (req, res) => {
+    const { username } = req.query;
+    const joinResult = await appService.joinPlayerAchieve(username);
+    res.json({ data: joinResult });
+});
 
 
 module.exports = router;

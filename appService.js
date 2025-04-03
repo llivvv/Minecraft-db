@@ -66,7 +66,6 @@ async function withOracleDB(action) {
 
 // ----------------------------------------------------------
 // Core functions for database operations
-// Modify these functions, especially the SQL queries, based on your project's requirements and design.
 async function testOracleConnection() {
     return await withOracleDB(async (connection) => {
         return true;
@@ -85,7 +84,7 @@ async function fetchPlayersFromDb() {
     });
 }
 
-// insert PlayerHas
+// INSERT on PlayerHas
 async function insertPlayer(username, user_credentials, xp, email, skin, iid) {
 	const xpInt = parseInt(xp, 10);
     const skinInt = parseInt(skin, 10);
@@ -105,7 +104,7 @@ async function insertPlayer(username, user_credentials, xp, email, skin, iid) {
     });
 }
 
-// update non primary key on PlayerHas
+// UPDATE on PlayerHas
 async function updatePlayerTable(username, email, xp) {
 	const xpInt = parseInt(xp, 10);
 	console.log(xpInt);
@@ -123,7 +122,7 @@ async function updatePlayerTable(username, email, xp) {
     });
 }
 
-// delete user on PlayerHas
+// DELETE on PlayerHas
 async function deletePlayer(username) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
@@ -138,7 +137,7 @@ async function deletePlayer(username) {
     });
 }
 
-// division on Achievement (achievements everyone has)
+// DIVISION on Achievement (achievements everyone has)
 async function divAchievement() {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(`
@@ -158,7 +157,7 @@ async function divAchievement() {
     });
 }
 
-// projection on Mob
+// PROJECTION on Mob
 async function projMob(params) {
   const sql = "SELECT " + params + " from Mob1";
 
@@ -170,7 +169,7 @@ async function projMob(params) {
   });
 }
 
-// Having on Saved (worlds saved by more than 2 players)
+// AGGREGATION with HAVING on Saved (worlds saved by more than 2 players)
 async function havingSaved() {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(`
@@ -185,7 +184,7 @@ async function havingSaved() {
     });
 }
 
-// AGGREGATION BY GROUP BY on Achieve
+// AGGREGATION with BY GROUP BY on Achieve
 async function groupByAchieve() {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(`
@@ -199,24 +198,7 @@ async function groupByAchieve() {
     });
 }
 
-// join on Player and Achieve
-async function joinPlayerAchieve(username) {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute(
-            `SELECT p.username, p.xp, p.email, a.aname, a.date_received, a.progress
-            FROM PlayerHas p
-            JOIN Achieve a ON p.username = a.username
-            WHERE p.username = :username`,
-            [username]
-        );
-
-        return result.rows;
-    }).catch(() => {
-        return [];
-    });
-}
-
-// nested aggregation with GROUP BY
+// NESTED AGGREGATION with GROUP BY on Achieve
 async function nestedAggAvgProgress() {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(`
@@ -234,6 +216,23 @@ async function nestedAggAvgProgress() {
     });
 }
 
+// JOIN on Player and Achieve
+async function joinPlayerAchieve(username) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `SELECT p.username, p.xp, p.email, a.aname, a.date_received, a.progress
+            FROM PlayerHas p
+            JOIN Achieve a ON p.username = a.username
+            WHERE p.username = :username`,
+            [username]
+        );
+
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
 module.exports = {
     testOracleConnection,
     fetchPlayersFromDb,
@@ -244,6 +243,6 @@ module.exports = {
     projMob,
     havingSaved,
     groupByAchieve,
-    joinPlayerAchieve,
     nestedAggAvgProgress,
+    joinPlayerAchieve,
 };

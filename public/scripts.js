@@ -3,13 +3,6 @@
  * Each function serves to process data on the frontend:
  *      - Before sending requests to the backend.
  *      - After receiving responses from the backend.
- * 
- * To tailor them to your specific needs,
- * adjust or expand these functions to match both your 
- *   backend endpoints 
- * and 
- *   HTML structure.
- * 
  */
 
 let isShowPlayers = false;
@@ -51,6 +44,7 @@ function makeTableRows(resData, tableBody) {
     });
 }
 
+// fetch players table
 async function fetchAndDisplayPlayers() {
     const tableElement = document.getElementById('allPlayers');
     const tableBody = document.getElementById('tbodyAllPlayers');
@@ -83,7 +77,7 @@ function showHidePlayers() {
 	isShowPlayers = !isShowPlayers;
 }
 
-// new insert function
+// for INSERT on PlayerHas
 async function insertPlayer(e) {
   e.preventDefault();
 
@@ -111,6 +105,7 @@ async function insertPlayer(e) {
   form.reset();
 }
 
+// for UPDATE on PlayerHas
 async function updatePlayerEmailXp(e) {
   e.preventDefault();
 
@@ -139,6 +134,7 @@ async function updatePlayerEmailXp(e) {
   }
 }
 
+// for DELETE on PlayerHas
 async function deletePlayer(e) {
     e.preventDefault();
 
@@ -165,7 +161,7 @@ async function deletePlayer(e) {
     }
 }
 
-// fetches achievements achieved by all and displays it
+// for DIVISION on Achievement
 async function viewAcByAll() {
 	const tableElement = document.getElementById('divAchievement');
     const tableBody = document.getElementById('tbodyDivAchievement');
@@ -197,7 +193,7 @@ async function viewAcByAll() {
     isShowAcByAll = !isShowAcByAll;
 }
 
-// for Mob1 projection
+// for PROJECTION on Mob1
 async function projMob(e) {
   e.preventDefault();
   const tableElement = document.getElementById('showProjMob');
@@ -250,7 +246,7 @@ function closeProjMobTable() {
 	hideBtn.classList.add('hide');
 }
 
-// fetches popular worlds (having query)
+// for AGGREGATION with HAVING on Saved
 async function viewHaving() {
 	const tableElement = document.getElementById('having');
     const tableBody = document.getElementById('tbodyHaving');
@@ -282,7 +278,7 @@ async function viewHaving() {
     isShowHaving = !isShowHaving;
 }
 
-// for AGGREGATION BY GROUP BY of Achieve
+// for AGGREGATION with GROUP BY on Achieve
 async function viewGroupBy() {
     const tableElement = document.getElementById('groupBy');
     const tableBody = document.getElementById('tbodyGroupBy');
@@ -314,34 +310,7 @@ async function viewGroupBy() {
     isShowGroupBy = !isShowGroupBy;
 }
 
-// for join Player and Achieve
-async function joinPlayer(e) {
-    e.preventDefault();
-
-    const usernameValue = document.getElementById('joinUsername').value;
-    const tableElement = document.getElementById('tableJoinTable');
-    const tableBody = document.getElementById('tbodyJoinResult');
-
-    const response = await fetch(`/join-player-achieve?username=${encodeURIComponent(usernameValue)}`, {
-        method: 'GET'
-    });
-    const responseData = await response.json();
-    const joinsContent = responseData.data;
-
-    tableBody.innerHTML = '';
-
-    joinsContent.forEach(row => {
-        const newRow = tableBody.insertRow();
-        row.forEach((cellVal) => {
-            const cell = newRow.insertCell();
-            cell.textContent = cellVal;
-        });
-    });
-
-    tableElement.classList.remove('hide');
-}
-
-// for nested aggregation on Player and Achieve
+// for NESTED AGGREGATION with GROUP BY on Achieve
 async function nestedProgress() {
     const tableElement = document.getElementById('nestedAggTable');
     const tableBody = document.getElementById('tbodyNestAgg');
@@ -372,10 +341,35 @@ async function nestedProgress() {
     isShowNestedAgg = !isShowNestedAgg;
 }
 
+// for JOIN on Player and Achieve
+async function joinPlayer(e) {
+    e.preventDefault();
+
+    const usernameValue = document.getElementById('joinUsername').value;
+    const tableElement = document.getElementById('tableJoinTable');
+    const tableBody = document.getElementById('tbodyJoinResult');
+
+    const response = await fetch(`/join-player-achieve?username=${encodeURIComponent(usernameValue)}`, {
+        method: 'GET'
+    });
+    const responseData = await response.json();
+    const joinsContent = responseData.data;
+
+    tableBody.innerHTML = '';
+
+    joinsContent.forEach(row => {
+        const newRow = tableBody.insertRow();
+        row.forEach((cellVal) => {
+            const cell = newRow.insertCell();
+            cell.textContent = cellVal;
+        });
+    });
+
+    tableElement.classList.remove('hide');
+}
 
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
-// Add or remove event listeners based on the desired functionalities.
 window.onload = function() {
     checkDbConnection();
     document.getElementById("viewPlayersTable").addEventListener("click", showHidePlayers);
@@ -386,13 +380,12 @@ window.onload = function() {
     document.getElementById('hideMobBtn').addEventListener("click", closeProjMobTable);
     document.getElementById("delPlayer").addEventListener("submit", deletePlayer);
     document.getElementById("havBtn").addEventListener("click", viewHaving);
-    document.getElementById('joinPlayerAndAchieve').addEventListener("submit", joinPlayer);
     document.getElementById("groupBtn").addEventListener("click", viewGroupBy);
     document.getElementById('nestedAggBtn').addEventListener("click", nestedProgress);
+    document.getElementById('joinPlayerAndAchieve').addEventListener("submit", joinPlayer);
 };
 
 // General function to refresh the displayed table data.
-// You can invoke this after any table-modifying operation to keep consistency.
 function fetchTableData() {
     fetchAndDisplayPlayers();
 }
