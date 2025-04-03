@@ -317,7 +317,6 @@ INSERT INTO	Play(username, join_code, start_time, end_time)
 VALUES ('MineCraftGenius', 'geniuss', TO_TIMESTAMP('2025-04-07 23:30:00',
 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2025-04-08 07:59:00', 'YYYY-MM-DD HH24:MI:SS'));
 
-
 INSERT INTO	Saved(join_code, username) VALUES ('candyy', 'Liv');
 INSERT INTO	Saved(join_code, username) VALUES ('candyy', 'Ruby');
 
