@@ -86,8 +86,6 @@ async function fetchPlayersFromDb() {
 
 // INSERT on PlayerHas
 async function insertPlayer(username, user_credentials, xp, email, skin, iid) {
-//	console.log(!(xp));
-//	console.log('reached here');
 	let xpInt;
 	let skinInt;
 	const iidInt = parseInt(iid, 10);
@@ -113,11 +111,10 @@ async function insertPlayer(username, user_credentials, xp, email, skin, iid) {
 // UPDATE on PlayerHas
 async function updatePlayerTable(username, email, xp) {
 	const xpInt = parseInt(xp, 10);
-	console.log(xpInt);
 
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            `UPDATE PlayerHas SET email=:email, xp=:xp where username=:username`,
+            `UPDATE PlayerHas SET email=:email, xp=:xp WHERE username=:username`,
             [email, xpInt, username],
             { autoCommit: true }
         );
@@ -166,6 +163,7 @@ async function divAchievement() {
 // PROJECTION on Mob
 async function projMob(params) {
   const sql = "SELECT " + params + " from Mob1";
+  // User doesn't input custom values, only clicks checkboxes, so params should be safe input
 
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(sql);
