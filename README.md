@@ -1,5 +1,7 @@
 # 🎮 Minecraft Database
-#### This database models the elements of the game Minecraft, including blocks, players, achievements, worlds, and servers. 
+#### Welcome to our Minecraft-inspired database project!
+#### This database models the core elements of the game - players, blocks, items, mobs, worlds
+#### It captures how they interact over time using achievements, and servers. 
 
 #### <hr>
 
@@ -7,14 +9,17 @@
 
 #### This database captures and organizes key aspects of the gameplay, including:
 
-- Players
-- Blocks & Items 
-- Mobs 
-- Worlds & Servers
-- Recipes 
+📌 **Players** and their XP, progress, and achievements
 
-#### It also models how quantities of objects (blocks, mobs, items) change over time as players explore, craft, and interact in the game.
+📌 **Blocks** & **Items** collected, crafted, and placed in the world
 
-#### <hr>
+📌 **Mobs** exist in game worlds
 
-#### It also represents how a world itself may also be part of a larger server, hosted by certain players and enjoyed by other players. 
+📌 **Worlds** & **Servers** showing how players are hosted together
+
+📌 **Recipes** used to craft items from blocks
+
+
+#### It also models how players explore, interact and change the world around them, from collecting resources to unlocking achievements. 
+
+#### The structure supports gameplay data like player progress, achievement status, server hosting, and item inventories.
