@@ -55,33 +55,32 @@ async function fetchAndDisplayPlayers() {
     const tableElement = document.getElementById('allPlayers');
     const tableBody = document.getElementById('tbodyAllPlayers');
 
-    if (isShowPlayers) {
-        tableElement.classList.add('hide');
-        document.getElementById("viewPlayersTable").innerHTML = 'View All Players';
-    } else {
-        document.getElementById("viewPlayersTable").innerHTML = 'Hide All Players';
+    const response = await fetch('/players', {
+        method: 'GET'
+    });
+    const responseData = await response.json();
+    const playersContent = responseData.data;
 
-        const response = await fetch('/players', {
-            method: 'GET'
-        });
-        const responseData = await response.json();
-        const playersContent = responseData.data;
-
-        if (tableBody) {
-            tableBody.innerHTML = '';
-        }
-
-        playersContent.forEach(user => {
-            const row = tableBody.insertRow();
-            user.forEach((field, index) => {
-                const cell = row.insertCell(index);
-                cell.textContent = field;
-            });
-        });
-        const playerSection = document.getElementById('playerSection');
-        playerSection.classList.remove('hide');
+    if (tableBody) {
+        tableBody.innerHTML = '';
     }
-    isShowPlayers = !isShowPlayers;
+
+    makeTableRows(playersContent, tableBody);
+
+}
+
+function showHidePlayers() {
+    const playerSection = document.getElementById('playerSection');
+
+	if (isShowPlayers) {
+		playerSection.classList.add('hide');
+        document.getElementById("viewPlayersTable").innerHTML = 'View All Players';
+	} else {
+		document.getElementById("viewPlayersTable").innerHTML = 'Hide All Players';
+		playerSection.classList.remove('hide');
+		fetchAndDisplayPlayers();
+	}
+	isShowPlayers = !isShowPlayers;
 }
 
 // new insert function
@@ -108,6 +107,8 @@ async function insertPlayer(e) {
   } else {
       messageElement.textContent = "Error inserting Player!";
   }
+
+  form.reset();
 }
 
 async function updatePlayerEmail(e) {
@@ -377,7 +378,7 @@ async function nestedProgress() {
 // Add or remove event listeners based on the desired functionalities.
 window.onload = function() {
     checkDbConnection();
-    document.getElementById("viewPlayersTable").addEventListener("click", fetchAndDisplayPlayers);
+    document.getElementById("viewPlayersTable").addEventListener("click", showHidePlayers);
     document.getElementById("insertPlayer").addEventListener("submit", insertPlayer);
     document.getElementById("updatePlayerEmail").addEventListener("submit", updatePlayerEmail);
     document.getElementById("divAchievementBtn").addEventListener("click", viewAcByAll);
