@@ -181,8 +181,9 @@ async function selectServer(clauses) {
         const result = await connection.execute(`
         SELECT *
         FROM Servers
-        WHERE 
-        ` + clauses);
+        WHERE ${clauses}
+        `,
+        [], { autoCommit: true });
         return result.rows;
     }).catch(() => {
         return [];
