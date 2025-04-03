@@ -180,6 +180,43 @@
 
 <br><hr><br> <!-- ========================================================================= -->
 
+<!-- for SELECTION -->
+<div id="selectionDiv">
+    <h3>Select Server</h3>
+    <p>The values are case sensitive and if you enter in the wrong case, the selection will not return anything.</p>
+
+    <form id="selectionForm">
+        <div id="selectionContainer">
+            <label for="attribute1">Choose Attribute 1:</label>
+            <br>
+            <select name="attribute" id="attribute1">
+                <option value="IPaddress">IP Address</option>
+                <option value="sname">Server Name</option>
+                <option value="player_capacity">Player Capacity</option>
+            </select>
+            <input type="text" id="condition1" name="condition" placeholder="What should this attribute be equal to?" maxlength="255" required>
+            <br>
+        </div>
+        <button type="submit">Select Server</button>
+        <button id="addCondition">Add Condition</button>
+    </form>
+
+    <table id="selection" class="hide">
+        <thead>
+        <tr>
+            <!--Table head, need to be adjusted accordingly to align with your own.-->
+            <th>IP Address</th>
+            <th>Server Name</th>
+            <th>Player Capacity</th>
+        </tr>
+        </thead>
+        <tbody id="tbodySelection">
+        </tbody>
+    </table>
+</div>
+
+<br><hr><br> <!-- ========================================================================= -->
+
 <!--for DIVISION query-->
 <div class="container">
     <button id="divAchievementBtn">View Achievements achieved by all players</button>
