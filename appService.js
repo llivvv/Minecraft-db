@@ -183,14 +183,33 @@ async function projMob(params) {
 }
 
 // SELECTION on Server
-async function selectServer(clauses) {
+async function selectServer(atts, conds, ops) {
+	const attsArr = atts.split(',');
+    const condsArr = conds.split(',');
+    const opsArr = ops.split(',');
+
+    const combo = [];
+    let allThings = '';
+
+    for (let i = 0; i < attsArr.length; i++) {
+        if (attsArr[i] === 'player_capacity') {
+            let capInt = parseInt(condsArr[i]);
+            combo.push(`${attsArr[i]}=${capInt}`);
+        } else {
+            combo.push(`${attsArr[i]}= '${condsArr[i]}'`);
+        }
+    }
+
+    for (let i = 0; i < combo.length - 1; i++) {
+        allThings = allThings + combo[i] + opsArr[i];
+    }
+	allThings = allThings + combo[combo.length-1];
+	console.log(allThings);
+
+	const sql = "SELECT * FROM Servers WHERE " + allThings;
+
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute(`
-        SELECT *
-        FROM Servers
-        WHERE ${clauses}
-        `,
-        [], { autoCommit: true });
+        const result = await connection.execute(sql);
         return result.rows;
     }).catch(() => {
         return [];

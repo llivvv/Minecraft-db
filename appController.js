@@ -75,8 +75,11 @@ router.get('/projMob', async (req, res) => {
 
 // for SELECTION on Server
 router.get('/selectServer', async (req, res) => {
-    const clauses = req.query.condition;
-    const tableContent = await appService.selectServer(clauses);
+	const atts = req.query.atts;
+	const conds = req.query.conds;
+	const ops = req.query.ops;
+//    const clauses = req.query.condition;
+    const tableContent = await appService.selectServer(atts, conds, ops);
     res.json({ data: tableContent });
 });
 

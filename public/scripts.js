@@ -411,36 +411,35 @@ function addCondition() {
 
 // SELECTION on Server
 async function selectServer(e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    const tableElement = document.getElementById('selection');
-    const tableBody = document.getElementById('tbodySelection');
+  const tableElement = document.getElementById('selection');
+  const tableBody = document.getElementById('tbodySelection');
 
-    const attribute = document.getElementById('attribute1').value;
-    const condition = document.getElementById('condition1').value;
-    let clause1 = attribute + "=" + condition;
+  const form = document.getElementById('selectionForm');
+  const formData = new FormData(form);
 
-    for (i = 2; i <= c; i++) {
-        const operation = document.getElementById('operation' + i).value;
-        const att = document.getElementById('attribute' + i).value;
-        const cond = document.getElementById('condition' + i).value;
-        const clause = att + "=" + cond;
-        clause1 = clause1 + " " + operation + " " + clause;
-    }
+  const attsArr = formData.getAll('attribute');
+  const condsArr = formData.getAll('condition');
+  const opsArr = formData.getAll('operation');
 
-    const response = await fetch(`/selectServer?condition=${encodeURIComponent(clause1)}`, { // what is this :(
-        method: 'GET',
-    });
+  const attsData = attsArr.join(",");
+  const condsData = condsArr.join(",");
+  const opsData = opsArr.join(",");
 
-    const responseData = await response.json();
-    const selectServer = responseData.data;
+const response = await fetch(`/selectServer?atts=${attsData}&conds=${condsData}&ops=${opsData}`, {
+  method: 'GET',
+});
 
-    if (tableBody) {
-        tableBody.innerHTML = '';
-    }
+  const responseData = await response.json();
+  const selectServer = responseData.data;
 
-    makeTableRows(selectServer, tableBody);
-    tableElement.classList.remove('hide');
+  if (tableBody) {
+      tableBody.innerHTML = '';
+  }
+
+  makeTableRows(selectServer, tableBody);
+  tableElement.classList.remove('hide');
 }
 
 // ---------------------------------------------------------------
