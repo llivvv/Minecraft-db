@@ -196,7 +196,7 @@ async function havingSaved() {
         SELECT join_code, COUNT(*)
         FROM Saved
         GROUP BY join_code
-        HAVING COUNT(*) > 2
+        HAVING COUNT(*) >= (0.5)*(SELECT COUNT(*) FROM PlayerHas)
         `);
         return result.rows;
     }).catch(() => {
