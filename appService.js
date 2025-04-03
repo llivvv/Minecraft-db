@@ -106,11 +106,14 @@ async function insertPlayer(username, user_credentials, xp, email, skin, iid) {
 }
 
 // update non primary key on PlayerHas
-async function updatePlayerTable(username, email) {
+async function updatePlayerTable(username, email, xp) {
+	const xpInt = parseInt(xp, 10);
+	console.log(xpInt);
+
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            `UPDATE PlayerHas SET email=:email where username=:username`,
-            [email, username],
+            `UPDATE PlayerHas SET email=:email, xp=:xp where username=:username`,
+            [email, xpInt, username],
             { autoCommit: true }
         );
 

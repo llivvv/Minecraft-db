@@ -111,32 +111,32 @@ async function insertPlayer(e) {
   form.reset();
 }
 
-async function updatePlayerEmail(e) {
-    e.preventDefault();
+async function updatePlayerEmailXp(e) {
+  e.preventDefault();
 
-    const usernameValue = document.getElementById('updateUsername').value;
-    const emailValue = document.getElementById('updateEmail').value;
+  const form = document.getElementById("updatePlayerEmailXp");
+  const formData = new FormData(form);
+//
+//    const usernameValue = document.getElementById('updateUsername').value;
+//    const emailValue = document.getElementById('updateEmail').value;
 
-    const response = await fetch('/update-player-email', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username: usernameValue,
-            email: emailValue
-        })
-    });
+  const response = await fetch('/update-player-email-xp', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(Object.fromEntries(formData))
+  });
 
-    const responseData = await response.json();
-    const messageElement = document.getElementById('updateEmailResultMsg');
+  const responseData = await response.json();
+  const messageElement = document.getElementById('updateEmailXpResultMsg');
 
-    if (responseData.success) {
-        messageElement.textContent = "Email updated successfully!";
-        fetchTableData();
-    } else {
-        messageElement.textContent = "Error updating email!";
-    }
+  if (responseData.success) {
+      messageElement.textContent = "Email and Xp updated successfully!";
+      fetchTableData();
+  } else {
+      messageElement.textContent = "Error updating email and Xp!";
+  }
 }
 
 async function deletePlayer(e) {
@@ -380,7 +380,7 @@ window.onload = function() {
     checkDbConnection();
     document.getElementById("viewPlayersTable").addEventListener("click", showHidePlayers);
     document.getElementById("insertPlayer").addEventListener("submit", insertPlayer);
-    document.getElementById("updatePlayerEmail").addEventListener("submit", updatePlayerEmail);
+    document.getElementById("updatePlayerEmailXp").addEventListener("submit", updatePlayerEmailXp);
     document.getElementById("divAchievementBtn").addEventListener("click", viewAcByAll);
     document.getElementById("formProjMob").addEventListener("submit", projMob);
     document.getElementById('hideMobBtn').addEventListener("click", closeProjMobTable);

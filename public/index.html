@@ -67,12 +67,13 @@
         <h3>Update</h3>
         <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do
             anything.</p>
-        <form id="updatePlayerEmail">
-            Username: <input type="text" id="updateUsername" placeholder="Enter Username" maxlength="16" required><br>
-            Email: <input type="text" id="updateEmail" placeholder="Enter Email" maxlength="255"><br>
-            <button type="submit">Update Email</button>
+        <form id="updatePlayerEmailXp">
+            Username: <input type="text" name="username" id="updateUsername" placeholder="Enter Username" maxlength="16" required><br>
+            Email: <input type="text" name="email" id="updateEmail" placeholder="Enter Email" maxlength="255" required><br>
+            xp: <input type="number" name="xp" id="updateXp" placeholder="Enter XP Amount" required><br>
+            <button type="submit">Update Email and Xp</button>
         </form>
-        <div id="updateEmailResultMsg"></div>
+        <div id="updateEmailXpResultMsg"></div>
 
         <h3>Delete</h3>
         <p>The values are case sensitive and if you enter in the wrong case, the delete statement will not do

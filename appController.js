@@ -39,15 +39,19 @@ router.post("/insert-player", async (req, res) => {
       }
   });
 
-// for update on PlayerHas
-router.post("/update-player-email", async (req, res) => {
-    const { username, email } = req.body;
-    const updateResult = await appService.updatePlayerTable(username, email);
-    if (updateResult) {
-        res.json({ success: true });
-    } else {
-        res.status(500).json({ success: false });
-    }
+  // for update on PlayerHas
+router.post("/update-player-email-xp", async (req, res) => {
+
+  const username = req.body.username;
+  const email = req.body.email;
+  const xp = req.body.xp;
+
+  const updateResult = await appService.updatePlayerTable(username, email, xp);
+  if (updateResult) {
+      res.json({ success: true });
+  } else {
+      res.status(500).json({ success: false });
+  }
 });
 
 // for delete on PlayerHas
