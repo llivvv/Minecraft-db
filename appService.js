@@ -109,16 +109,25 @@ async function insertPlayer(username, user_credentials, xp, email, skin, iid) {
 }
 
 // UPDATE on PlayerHas
-async function updatePlayerTable(username, email, xp) {
-	const xpInt = parseInt(xp, 10);
-
+async function updatePlayerTable(username, email, xp, skin) {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute(
-            `UPDATE PlayerHas SET email=:email, xp=:xp WHERE username=:username`,
-            [email, xpInt, username],
-            { autoCommit: true }
-        );
+        const updates = ["email = :email"];
+        const params = [email];
 
+        if (xp !== undefined && xp !== null && xp !== '') {
+            updates.push("xp = :xp");
+            params.push(parseInt(xp, 10));
+        }
+
+        if (skin !== undefined && skin !== null && skin !== '') {
+            updates.push("skin = :skin");
+            params.push(parseInt(skin, 10));
+        }
+
+        const sql = `UPDATE PlayerHas SET ${updates.join(", ")} WHERE username = :username`;
+        params.push(username);
+
+        const result = await connection.execute(sql, params, { autoCommit: true });
         return result.rowsAffected && result.rowsAffected > 0;
     }).catch(() => {
         return false;

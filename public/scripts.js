@@ -106,13 +106,13 @@ async function insertPlayer(e) {
 }
 
 // for UPDATE on PlayerHas
-async function updatePlayerEmailXp(e) {
+async function updatePlayerInfo(e) {
   e.preventDefault();
 
   const form = document.getElementById("updatePlayerEmailXp");
   const formData = new FormData(form);
 
-  const response = await fetch('/update-player-email-xp', {
+  const response = await fetch('/update-player', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'
@@ -121,14 +121,14 @@ async function updatePlayerEmailXp(e) {
   });
 
   const responseData = await response.json();
-  const messageElement = document.getElementById('updateEmailXpResultMsg');
+  const messageElement = document.getElementById('updateResultMsg');
 
   if (responseData.success) {
-      messageElement.textContent = "Email and Xp updated successfully!";
+      messageElement.textContent = "Player updated successfully!";
       form.reset();
       fetchTableData();
   } else {
-      messageElement.textContent = "Error updating email and Xp!";
+      messageElement.textContent = "Error updating Player!";
   }
 }
 
@@ -449,7 +449,7 @@ window.onload = function() {
     checkDbConnection();
     document.getElementById("viewPlayersTable").addEventListener("click", showHidePlayers);
     document.getElementById("insertPlayer").addEventListener("submit", insertPlayer);
-    document.getElementById("updatePlayerEmailXp").addEventListener("submit", updatePlayerEmailXp);
+    document.getElementById("updatePlayerEmailXp").addEventListener("submit", updatePlayerInfo);
     document.getElementById("divAchievementBtn").addEventListener("click", viewAcByAll);
     document.getElementById("formProjMob").addEventListener("submit", projMob);
     document.getElementById('hideMobBtn').addEventListener("click", closeProjMobTable);
