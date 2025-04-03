@@ -169,6 +169,20 @@ async function projMob(params) {
   });
 }
 
+// SELECTION on Server
+async function selectServer(clauses) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(`
+        SELECT *
+        FROM Servers
+        WHERE 
+        ` + clauses);
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
 // AGGREGATION with HAVING on Saved (worlds saved by more than 2 players)
 async function havingSaved() {
     return await withOracleDB(async (connection) => {
@@ -241,6 +255,7 @@ module.exports = {
     deletePlayer,
     divAchievement,
     projMob,
+    selectServer,
     havingSaved,
     groupByAchieve,
     nestedAggAvgProgress,
